@@ -34,6 +34,18 @@
             <strong><%= dbInfo.provider %></strong>
             <span>Database</span>
           </article>
+          <article class="stat-card">
+            <strong><%= bookings.filter((booking) => booking.status === 'confirmed').length %></strong>
+            <span>Confirmed</span>
+          </article>
+          <article class="stat-card">
+            <strong><%= bookings.filter((booking) => booking.status === 'contacted').length %></strong>
+            <span>Contacted</span>
+          </article>
+          <article class="stat-card">
+            <strong><%= bookings.filter((booking) => booking.status === 'completed').length %></strong>
+            <span>Completed</span>
+          </article>
         </section>
 
         <section class="admin-panel">
@@ -61,6 +73,7 @@
                   <th>Service</th>
                   <th>Slot</th>
                   <th>Contact</th>
+                  <th>Notes</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -73,9 +86,14 @@
                     </td>
                     <td><%= booking.service %></td>
                     <td><%= booking.preferredDay %><br><%= booking.preferredTime %></td>
-                    <td><%= booking.phone %><br><%= booking.email %></td>
                     <td>
-                      <form action="/admin/bookings/<%= booking.id %>/status" method="post">
+                      <a href="tel:<%= booking.phone.replace(/\s+/g, '') %>"><%= booking.phone %></a><br>
+                      <a href="mailto:<%= booking.email %>"><%= booking.email %></a>
+                    </td>
+                    <td><%= booking.notes || 'No notes provided.' %></td>
+                    <td>
+                      <form class="status-form" action="/admin/bookings/<%= booking.id %>/status" method="post">
+                        <span class="status-badge status-<%= booking.status %>"><%= booking.status %></span>
                         <select name="status" onchange="this.form.submit()">
                           <% ['new', 'contacted', 'confirmed', 'completed'].forEach((status) => { %>
                             <option value="<%= status %>" <%= booking.status === status ? 'selected' : '' %>>
@@ -89,7 +107,7 @@
                 <% }) %>
                 <% if (!bookings.length) { %>
                   <tr>
-                    <td colspan="5">No bookings yet.</td>
+                    <td colspan="6">No bookings yet.</td>
                   </tr>
                 <% } %>
               </tbody>

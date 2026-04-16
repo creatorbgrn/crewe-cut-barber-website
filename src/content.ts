@@ -163,3 +163,62 @@ export const highlights = [
   "Actual in-shop photography only",
   "Straightforward pricing"
 ];
+
+export const reasons = [
+  {
+    title: "Walk in or book ahead",
+    text: "The site supports both behaviours clients already expect: immediate phone contact and a proper booking request form."
+  },
+  {
+    title: "Real pricing up front",
+    text: "Haircuts, fades, beard work, kids cuts, and grooming are all listed clearly so fewer visitors drop off confused."
+  },
+  {
+    title: "Actual shop photography",
+    text: "The visual trust comes from the real storefront, the real stations, and real in-shop finished work."
+  },
+  {
+    title: "Useful admin workflow",
+    text: "Every booking request lands in Turso and can be reviewed, contacted, confirmed, and completed from the dashboard."
+  }
+];
+
+export const actionCards = [
+  {
+    title: "Call the shop",
+    text: "For same-day availability, quick questions, or direct contact.",
+    link: "tel:01316294160",
+    linkLabel: "0131 629 4160"
+  },
+  {
+    title: "Get directions",
+    text: "Make it easy for first-time visitors to find the shop without friction.",
+    link: business.mapUrl,
+    linkLabel: "Open Google Maps"
+  },
+  {
+    title: "Send a request",
+    text: "Capture leads outside busy shop moments and keep them visible in admin.",
+    link: "#booking",
+    linkLabel: "Book a slot"
+  }
+];
+
+export const faqs = [
+  {
+    question: "Do I need an appointment?",
+    answer: "No. Walk-ins are welcome, and the website also lets clients send a booking request when they want the shop to follow up."
+  },
+  {
+    question: "What services are most popular?",
+    answer: "Haircuts, skin or zero fades, beard work, and scissor cuts are all priced clearly on the site so clients can decide fast."
+  },
+  {
+    question: "When is the shop open?",
+    answer: "Monday to Saturday from 9:00AM to 7:00PM, and Sunday from 10:00AM to 6:00PM."
+  },
+  {
+    question: "Where is the shop based?",
+    answer: "Crewe Cut Barber is at 218 Boswall Parkway, Edinburgh, EH5 2LX."
+  }
+];

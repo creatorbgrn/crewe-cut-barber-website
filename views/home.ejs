@@ -70,7 +70,7 @@
           </div>
 
           <div class="hero-visual">
-            <img src="/images/storefront.jpg" alt="Crewe Cut Barber storefront">
+            <img src="/images/storefront.jpg" alt="Crewe Cut Barber storefront" onerror="this.onerror=null;this.src='/images/interior-wide.jpg'">
             <div class="floating-card floating-top">
               <span>Trusted local shop</span>
               <strong>Real storefront. Real service.</strong>
@@ -80,6 +80,19 @@
               <strong><%= business.addressLine1 %></strong>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section class="action-rail">
+        <div class="container action-grid">
+          <% actionCards.forEach((card) => { %>
+            <article class="action-card">
+              <p class="eyebrow">Fast action</p>
+              <h3><%= card.title %></h3>
+              <p><%= card.text %></p>
+              <a class="action-link" href="<%= card.link %>" <%= card.link.startsWith('http') ? 'target="_blank" rel="noreferrer"' : '' %>><%= card.linkLabel %></a>
+            </article>
+          <% }) %>
         </div>
       </section>
 
@@ -99,8 +112,28 @@
             </div>
           </div>
           <div class="story-photo-stack">
-            <img class="story-main" src="/images/interior-wide.jpg" alt="Crewe Cut Barber interior">
-            <img class="story-side" src="/images/cut-detail.jpg" alt="Haircut detail at Crewe Cut Barber">
+            <img class="story-main" src="/images/interior-wide.jpg" alt="Crewe Cut Barber interior" onerror="this.onerror=null;this.src='/images/interior-row.jpg'">
+            <img class="story-side" src="/images/cut-detail.jpg" alt="Haircut detail at Crewe Cut Barber" onerror="this.onerror=null;this.src='/images/fade-finish.jpg'">
+          </div>
+        </div>
+      </section>
+
+      <section class="reasons">
+        <div class="container">
+          <div class="section-head reasons-head">
+            <div>
+              <p class="eyebrow">Why this works</p>
+              <h2>A barbershop website should remove hesitation, not add it.</h2>
+            </div>
+            <p class="section-copy">The site now answers the questions people actually have before they decide: what it looks like, what it costs, where it is, when it is open, and how to contact the shop immediately.</p>
+          </div>
+          <div class="reasons-grid">
+            <% reasons.forEach((item) => { %>
+              <article class="reason-card">
+                <h3><%= item.title %></h3>
+                <p><%= item.text %></p>
+              </article>
+            <% }) %>
           </div>
         </div>
       </section>
@@ -135,11 +168,46 @@
           <div class="gallery-grid">
             <% gallery.forEach((item, index) => { %>
               <article class="gallery-card gallery-card-<%= index + 1 %>">
-                <img src="<%= item.image %>" alt="<%= item.title %>">
+                <img src="<%= item.image %>" alt="<%= item.title %>" loading="lazy" onerror="this.onerror=null;this.src='/images/interior-wide.jpg'">
                 <div class="gallery-overlay">
                   <h3><%= item.title %></h3>
                   <p><%= item.text %></p>
                 </div>
+              </article>
+            <% }) %>
+          </div>
+        </div>
+      </section>
+
+      <section class="signature">
+        <div class="container signature-grid">
+          <div class="signature-photo">
+            <img src="/images/client-chair.jpg" alt="Client in barber chair at Crewe Cut Barber" onerror="this.onerror=null;this.src='/images/chairs.jpg'">
+          </div>
+          <div class="signature-copy">
+            <p class="eyebrow">Conversion focus</p>
+            <h2>Built to turn local searches into calls, walk-ins, and booking requests.</h2>
+            <p class="section-copy">This is not just a brochure page. It gives the shop a real customer path: see the place, understand the prices, trust the standard, make contact fast, and capture enquiries in an admin system that the owner can actually use.</p>
+            <div class="signature-points">
+              <div><strong>Live booking capture</strong><span>Requests are saved instead of lost.</span></div>
+              <div><strong>Admin follow-up workflow</strong><span>Status changes make the lead pipeline visible.</span></div>
+              <div><strong>Mobile-first actions</strong><span>Call, directions, and booking are always close to hand.</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">FAQs</p>
+            <h2>The answers most clients want before they choose a barber.</h2>
+          </div>
+          <div class="faq-grid">
+            <% faqs.forEach((item) => { %>
+              <article class="faq-card">
+                <h3><%= item.question %></h3>
+                <p><%= item.answer %></p>
               </article>
             <% }) %>
           </div>
@@ -225,5 +293,11 @@
         </div>
       </div>
     </footer>
+
+    <div class="mobile-cta-bar">
+      <a href="tel:<%= business.phone.replace(/\s+/g, '') %>">Call now</a>
+      <a href="#booking">Book</a>
+      <a href="<%= business.mapUrl %>" target="_blank" rel="noreferrer">Directions</a>
+    </div>
   </body>
 </html>

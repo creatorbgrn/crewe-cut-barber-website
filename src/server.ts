@@ -5,7 +5,7 @@ import session from "express-session";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { business, gallery, highlights, services } from "./content.js";
+import { actionCards, business, faqs, gallery, highlights, reasons, services } from "./content.js";
 import { createBooking, initSchema, listBookings, updateBookingStatus } from "./db.js";
 
 declare module "express-session" {
@@ -60,6 +60,9 @@ app.get("/", (_req, res) => {
     services,
     gallery,
     highlights,
+    actionCards,
+    reasons,
+    faqs,
     query: _req.query
   });
 });

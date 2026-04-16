@@ -127,14 +127,19 @@ h3 {
 
 .hero,
 .story,
+.action-rail,
+.reasons,
 .services,
 .gallery,
+.signature,
+.faq,
 .booking {
   padding: 4rem 0;
 }
 
 .hero-grid,
 .story-grid,
+.signature-grid,
 .booking-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -318,6 +323,61 @@ h2 {
   align-items: end;
 }
 
+.action-rail {
+  padding-top: 0;
+}
+
+.action-grid,
+.reasons-grid,
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.action-card,
+.reason-card,
+.faq-card,
+.signature-points div {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.action-card,
+.reason-card,
+.faq-card {
+  padding: 1.35rem;
+}
+
+.action-card h3,
+.reason-card h3,
+.faq-card h3 {
+  margin: 0 0 0.7rem;
+  font-size: 1.7rem;
+}
+
+.action-card p,
+.reason-card p,
+.faq-card p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.action-link {
+  display: inline-flex;
+  margin-top: 1rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.reasons-head {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.5rem;
+  align-items: end;
+}
+
 .story-main,
 .story-side {
   border-radius: var(--radius-lg);
@@ -400,6 +460,37 @@ h2 {
 
 .gallery-overlay p {
   color: rgba(255, 255, 255, 0.8);
+}
+
+.signature-photo img {
+  min-height: 580px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.signature-copy {
+  display: grid;
+  gap: 1rem;
+}
+
+.signature-points {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.signature-points div {
+  padding: 1rem 1.1rem;
+}
+
+.signature-points strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--accent);
+}
+
+.signature-points span {
+  color: var(--muted);
 }
 
 .backend-points {
@@ -535,8 +626,48 @@ h2 {
   font-size: 0.86rem;
 }
 
+.status-form {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid transparent;
+}
+
+.status-new {
+  background: rgba(210, 160, 93, 0.14);
+  color: var(--accent);
+  border-color: rgba(210, 160, 93, 0.2);
+}
+
+.status-contacted {
+  background: rgba(111, 168, 220, 0.14);
+  color: #90c3ff;
+  border-color: rgba(111, 168, 220, 0.24);
+}
+
+.status-confirmed {
+  background: rgba(116, 198, 157, 0.14);
+  color: #95e8bf;
+  border-color: rgba(116, 198, 157, 0.24);
+}
+
+.status-completed {
+  background: rgba(179, 179, 179, 0.14);
+  color: #e1dfdf;
+  border-color: rgba(179, 179, 179, 0.24);
+}
+
 .site-footer {
-  padding: 1.5rem 0 2.5rem;
+  padding: 1.5rem 0 6rem;
   border-top: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.02);
 }
@@ -558,20 +689,61 @@ h2 {
   color: var(--muted);
 }
 
+.mobile-cta-bar {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  width: min(680px, calc(100% - 1rem));
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+  z-index: 25;
+}
+
+.mobile-cta-bar a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  border-radius: 999px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-cta-bar a:nth-child(2) {
+  background: linear-gradient(135deg, var(--accent), #e8bc7b);
+  color: #1f1409;
+}
+
 @media (max-width: 1040px) {
   .hero-grid,
   .story-grid,
+  .signature-grid,
   .booking-grid,
   .admin-shell {
     grid-template-columns: 1fr;
   }
 
+  .action-grid,
+  .reasons-grid,
+  .faq-grid,
   .services-grid,
   .gallery-grid,
   .stats-grid,
   .hours-grid,
   .admin-meta-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reasons-head {
+    grid-template-columns: 1fr;
   }
 
   .admin-sidebar {
@@ -596,6 +768,9 @@ h2 {
   }
 
   .services-grid,
+  .action-grid,
+  .reasons-grid,
+  .faq-grid,
   .gallery-grid,
   .stats-grid,
   .hours-grid,
@@ -615,5 +790,10 @@ h2 {
     position: static;
     margin-top: 1rem;
     max-width: none;
+  }
+
+  .mobile-cta-bar {
+    width: calc(100% - 1rem);
+    border-radius: 24px;
   }
 }
