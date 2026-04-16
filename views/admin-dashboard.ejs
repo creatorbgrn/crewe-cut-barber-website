@@ -65,6 +65,56 @@
             <p class="eyebrow">Bookings</p>
             <h2>Incoming requests</h2>
           </div>
+          <div class="mobile-bookings">
+            <% bookings.forEach((booking) => { %>
+              <article class="mobile-booking-card">
+                <div class="mobile-booking-head">
+                  <div>
+                    <strong><%= booking.clientName %></strong>
+                    <span><%= booking.createdAt %></span>
+                  </div>
+                  <span class="status-badge status-<%= booking.status %>"><%= booking.status %></span>
+                </div>
+                <dl class="mobile-booking-meta">
+                  <div>
+                    <dt>Service</dt>
+                    <dd><%= booking.service %></dd>
+                  </div>
+                  <div>
+                    <dt>Slot</dt>
+                    <dd><%= booking.preferredDay %> at <%= booking.preferredTime %></dd>
+                  </div>
+                  <div>
+                    <dt>Phone</dt>
+                    <dd><a href="tel:<%= booking.phone.replace(/\s+/g, '') %>"><%= booking.phone %></a></dd>
+                  </div>
+                  <div>
+                    <dt>Email</dt>
+                    <dd><a href="mailto:<%= booking.email %>"><%= booking.email %></a></dd>
+                  </div>
+                  <div>
+                    <dt>Notes</dt>
+                    <dd><%= booking.notes || 'No notes provided.' %></dd>
+                  </div>
+                </dl>
+                <form class="status-form" action="/admin/bookings/<%= booking.id %>/status" method="post">
+                  <label>
+                    Update status
+                    <select name="status" onchange="this.form.submit()">
+                      <% ['new', 'contacted', 'confirmed', 'completed'].forEach((status) => { %>
+                        <option value="<%= status %>" <%= booking.status === status ? 'selected' : '' %>>
+                          <%= status %>
+                        </option>
+                      <% }) %>
+                    </select>
+                  </label>
+                </form>
+              </article>
+            <% }) %>
+            <% if (!bookings.length) { %>
+              <div class="mobile-booking-empty">No bookings yet.</div>
+            <% } %>
+          </div>
           <div class="table-wrap">
             <table class="bookings-table">
               <thead>
