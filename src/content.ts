@@ -11,7 +11,7 @@ export const business = {
   tagline: "Sharp local barbering in Edinburgh",
   headline: "Sharp cuts, clean fades, beard work, and dependable seven-day service.",
   intro:
-    "Crewe Cut Barber is a trusted local shop with straightforward pricing, seven-day opening, and a clean, modern standard of work. This site gives clients a clear way to explore services, see the shop, and request a convenient slot.",
+    "Crewe Cut Barber is a trusted local shop with straightforward pricing, seven-day opening, and a clean, modern standard of work for everyday trims, fades, beard work, and grooming.",
   phone: "0131 629 4160",
   addressLine1: "218 Boswall Parkway",
   addressLine2: "Edinburgh, EH5 2LX",
@@ -166,20 +166,20 @@ export const highlights = [
 
 export const reasons = [
   {
-    title: "Walk in or book ahead",
-    text: "The site supports both behaviours clients already expect: immediate phone contact and a proper booking request form."
+    title: "Consistent finish",
+    text: "Clean outlines, strong fades, and dependable everyday barbering without overcomplicating the experience."
   },
   {
-    title: "Real pricing up front",
-    text: "Haircuts, fades, beard work, kids cuts, and grooming are all listed clearly so fewer visitors drop off confused."
+    title: "Clear pricing",
+    text: "Haircuts, fades, beard work, kids cuts, and grooming are listed clearly so clients know what to expect before they visit."
   },
   {
-    title: "Actual shop photography",
-    text: "The visual trust comes from the real storefront, the real stations, and real in-shop finished work."
+    title: "Real shop atmosphere",
+    text: "The space, the stations, and the work shown here all come from the actual shop clients walk into."
   },
   {
-    title: "Useful admin workflow",
-    text: "Every booking request lands in Turso and can be reviewed, contacted, confirmed, and completed from the dashboard."
+    title: "Easy to reach",
+    text: "Call, get directions, or send a booking request in a few seconds from any device."
   }
 ];
 
@@ -198,7 +198,7 @@ export const actionCards = [
   },
   {
     title: "Send a request",
-    text: "Capture leads outside busy shop moments and keep them visible in admin.",
+    text: "Choose a service and preferred time, then send a request directly to the shop.",
     link: "#booking",
     linkLabel: "Book a slot"
   }
@@ -207,7 +207,7 @@ export const actionCards = [
 export const faqs = [
   {
     question: "Do I need an appointment?",
-    answer: "No. Walk-ins are welcome, and the website also lets clients send a booking request when they want the shop to follow up."
+    answer: "No. Walk-ins are welcome, and you can also send a booking request if you want the shop to follow up with a suitable slot."
   },
   {
     question: "What services are most popular?",

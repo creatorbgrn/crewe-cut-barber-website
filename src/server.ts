@@ -111,12 +111,7 @@ app.get("/admin", async (req, res, next) => {
     const bookings = await listBookings();
     res.render("admin-dashboard", {
       bookings,
-      business,
-      dbInfo: {
-        provider: "Turso / libSQL",
-        hasStorage: "Yes",
-        bookingEndpoint: "/bookings"
-      }
+      business
     });
   } catch (error) {
     next(error);

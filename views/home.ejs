@@ -14,7 +14,7 @@
     <div class="topbar">
       <div class="container topbar-inner">
         <span><%= business.reviewSummary %></span>
-        <span>Open 7 days</span>
+        <span id="shop-status">Open 7 days</span>
         <a href="tel:<%= business.phone.replace(/\s+/g, '') %>"><%= business.phone %></a>
       </div>
     </div>
@@ -29,13 +29,12 @@
           <a href="#services">Services</a>
           <a href="#gallery">Gallery</a>
           <a href="#booking">Booking</a>
-          <a href="/admin">Admin</a>
         </nav>
       </div>
     </header>
 
     <main>
-      <section class="hero">
+      <section class="hero reveal">
         <div class="container hero-grid">
           <div class="hero-copy">
             <p class="eyebrow"><%= business.tagline %></p>
@@ -51,6 +50,12 @@
             <div class="hero-actions">
               <a class="button button-primary" href="#booking">Book now</a>
               <a class="button button-secondary" href="<%= business.mapUrl %>" target="_blank" rel="noreferrer">View location</a>
+            </div>
+
+            <div class="live-status-card">
+              <span class="live-status-label">Today</span>
+              <strong id="live-status-title">Checking opening hours</strong>
+              <p id="live-status-copy">Loading current opening status.</p>
             </div>
 
             <div class="stats-grid">
@@ -83,10 +88,10 @@
         </div>
       </section>
 
-      <section class="action-rail">
+      <section class="action-rail reveal">
         <div class="container action-grid">
           <% actionCards.forEach((card) => { %>
-            <article class="action-card">
+            <article class="action-card reveal">
               <p class="eyebrow">Fast action</p>
               <h3><%= card.title %></h3>
               <p><%= card.text %></p>
@@ -96,12 +101,12 @@
         </div>
       </section>
 
-      <section class="story">
+      <section class="story reveal">
         <div class="container story-grid">
           <div>
             <p class="eyebrow">Inside the shop</p>
             <h2>Warm interior, clean stations, and a straightforward service experience from the moment clients walk in.</h2>
-            <p class="section-copy">The same standard that works in person should carry through online: clear information, confident presentation, and a simple way for clients to get in touch about the service they want.</p>
+            <p class="section-copy">A good local barbershop should feel easy to trust. Clear prices, familiar surroundings, and direct contact make the decision simple.</p>
             <div class="hours-grid">
               <% business.hours.forEach((item) => { %>
                 <div class="hour-card">
@@ -118,18 +123,18 @@
         </div>
       </section>
 
-      <section class="reasons">
+      <section class="reasons reveal">
         <div class="container">
           <div class="section-head reasons-head">
             <div>
-              <p class="eyebrow">Why this works</p>
-              <h2>A barbershop website should remove hesitation, not add it.</h2>
+              <p class="eyebrow">What clients notice</p>
+              <h2>The details that make a local barbershop feel worth returning to.</h2>
             </div>
-            <p class="section-copy">The site now answers the questions people actually have before they decide: what it looks like, what it costs, where it is, when it is open, and how to contact the shop immediately.</p>
+            <p class="section-copy">The experience should feel direct from the first glance: strong visual trust, useful pricing, clean contact paths, and a clear sense of the shop’s standard.</p>
           </div>
           <div class="reasons-grid">
             <% reasons.forEach((item) => { %>
-              <article class="reason-card">
+              <article class="reason-card reveal">
                 <h3><%= item.title %></h3>
                 <p><%= item.text %></p>
               </article>
@@ -138,7 +143,7 @@
         </div>
       </section>
 
-      <section id="services" class="services">
+      <section id="services" class="services reveal">
         <div class="container">
           <div class="section-head">
             <p class="eyebrow">Price list</p>
@@ -146,7 +151,7 @@
           </div>
           <div class="services-grid">
             <% services.forEach((service) => { %>
-              <article class="service-card <%= service.featured ? 'featured' : '' %>">
+              <article class="service-card reveal <%= service.featured ? 'featured' : '' %>">
                 <div class="service-meta">
                   <span><%= service.duration %></span>
                   <strong><%= service.price %></strong>
@@ -159,7 +164,7 @@
         </div>
       </section>
 
-      <section id="gallery" class="gallery">
+      <section id="gallery" class="gallery reveal">
         <div class="container">
           <div class="section-head">
             <p class="eyebrow">Gallery</p>
@@ -167,8 +172,10 @@
           </div>
           <div class="gallery-grid">
             <% gallery.forEach((item, index) => { %>
-              <article class="gallery-card gallery-card-<%= index + 1 %>">
-                <img src="<%= item.image %>" alt="<%= item.title %>" loading="lazy" onerror="this.onerror=null;this.src='/images/interior-wide.jpg'">
+              <article class="gallery-card reveal gallery-card-<%= index + 1 %>">
+                <button class="gallery-button" type="button" data-gallery-src="<%= item.image %>" data-gallery-title="<%= item.title %>" data-gallery-text="<%= item.text %>">
+                  <img src="<%= item.image %>" alt="<%= item.title %>" loading="lazy" onerror="this.onerror=null;this.src='/images/interior-wide.jpg'">
+                </button>
                 <div class="gallery-overlay">
                   <h3><%= item.title %></h3>
                   <p><%= item.text %></p>
@@ -179,25 +186,25 @@
         </div>
       </section>
 
-      <section class="signature">
+      <section class="signature reveal">
         <div class="container signature-grid">
           <div class="signature-photo">
             <img src="/images/client-chair.jpg" alt="Client in barber chair at Crewe Cut Barber" onerror="this.onerror=null;this.src='/images/chairs.jpg'">
           </div>
           <div class="signature-copy">
-            <p class="eyebrow">Conversion focus</p>
-            <h2>Built to turn local searches into calls, walk-ins, and booking requests.</h2>
-            <p class="section-copy">This is not just a brochure page. It gives the shop a real customer path: see the place, understand the prices, trust the standard, make contact fast, and capture enquiries in an admin system that the owner can actually use.</p>
+            <p class="eyebrow">The standard</p>
+            <h2>A cleaner digital presence that still feels like the shop clients already know.</h2>
+            <p class="section-copy">The visual tone stays grounded in the real space, while the customer journey stays direct: see the standard, check the prices, make contact, and get in.</p>
             <div class="signature-points">
-              <div><strong>Live booking capture</strong><span>Requests are saved instead of lost.</span></div>
-              <div><strong>Admin follow-up workflow</strong><span>Status changes make the lead pipeline visible.</span></div>
-              <div><strong>Mobile-first actions</strong><span>Call, directions, and booking are always close to hand.</span></div>
+              <div><strong>Clear first impression</strong><span>Real photography and sharper structure build trust fast.</span></div>
+              <div><strong>Easy contact flow</strong><span>Call, directions, and booking stay close at hand across the page.</span></div>
+              <div><strong>Better on mobile</strong><span>The layout is tuned for quick decisions on a phone, not just desktop viewing.</span></div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="faq">
+      <section class="faq reveal">
         <div class="container">
           <div class="section-head">
             <p class="eyebrow">FAQs</p>
@@ -205,7 +212,7 @@
           </div>
           <div class="faq-grid">
             <% faqs.forEach((item) => { %>
-              <article class="faq-card">
+              <article class="faq-card reveal">
                 <h3><%= item.question %></h3>
                 <p><%= item.answer %></p>
               </article>
@@ -214,7 +221,7 @@
         </div>
       </section>
 
-      <section id="booking" class="booking">
+      <section id="booking" class="booking reveal">
         <div class="container booking-grid">
           <div class="booking-copy">
             <p class="eyebrow">Booking</p>
@@ -222,8 +229,8 @@
             <p class="section-copy">Use the form below to send the service you want, the time you prefer, and anything useful for the barber to know before your visit.</p>
             <div class="backend-points">
               <div><strong>1.</strong><span>Choose your service and preferred time</span></div>
-              <div><strong>2.</strong><span>Send your booking request in a few seconds</span></div>
-              <div><strong>3.</strong><span>The shop reviews and manages requests from the admin dashboard</span></div>
+              <div><strong>2.</strong><span>Send your request in a few seconds</span></div>
+              <div><strong>3.</strong><span>The shop gets back to you with the best available slot</span></div>
             </div>
             <div class="contact-card">
               <strong><%= business.name %></strong>
@@ -292,6 +299,9 @@
           <p><%= business.reviewSummary %></p>
         </div>
       </div>
+      <div class="container footer-admin-row">
+        <a class="footer-admin-link" href="/admin" aria-label="Admin login">Admin</a>
+      </div>
     </footer>
 
     <div class="mobile-cta-bar">
@@ -299,5 +309,16 @@
       <a href="#booking">Book</a>
       <a href="<%= business.mapUrl %>" target="_blank" rel="noreferrer">Directions</a>
     </div>
+    <div class="lightbox" id="gallery-lightbox" aria-hidden="true">
+      <button class="lightbox-close" type="button" aria-label="Close gallery">&times;</button>
+      <div class="lightbox-dialog">
+        <img id="lightbox-image" src="" alt="">
+        <div class="lightbox-copy">
+          <h3 id="lightbox-title"></h3>
+          <p id="lightbox-text"></p>
+        </div>
+      </div>
+    </div>
+    <script src="/app.js"></script>
   </body>
 </html>

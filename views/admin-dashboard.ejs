@@ -14,7 +14,7 @@
       <aside class="admin-sidebar">
         <p class="eyebrow">Admin</p>
         <h1><%= business.name %></h1>
-        <p class="section-copy">Live booking requests stored in Turso.</p>
+        <p class="section-copy">Review booking requests, update statuses, and stay on top of incoming enquiries.</p>
         <form action="/admin/logout" method="post">
           <button class="button button-secondary button-full" type="submit">Log out</button>
         </form>
@@ -46,18 +46,6 @@
             <strong><%= bookings.filter((booking) => booking.status === 'completed').length %></strong>
             <span>Completed</span>
           </article>
-        </section>
-
-        <section class="admin-panel">
-          <div class="section-head">
-            <p class="eyebrow">Backend connection</p>
-            <h2>This dashboard reads from the Turso bookings table.</h2>
-          </div>
-          <div class="backend-points">
-            <div><strong>Provider</strong><span><%= dbInfo.provider %></span></div>
-            <div><strong>Storage active</strong><span><%= dbInfo.hasStorage %></span></div>
-            <div><strong>Booking endpoint</strong><span><%= dbInfo.bookingEndpoint %></span></div>
-          </div>
         </section>
 
         <section class="admin-panel">
