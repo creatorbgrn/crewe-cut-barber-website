@@ -35,7 +35,7 @@
 
     <main>
       <section class="hero reveal">
-        <div class="container hero-grid">
+        <div class="container hero-grid" data-hero-parallax>
           <div class="hero-copy">
             <p class="eyebrow"><%= business.tagline %></p>
             <h1><%= business.headline %></h1>
@@ -98,6 +98,31 @@
               <a class="action-link" href="<%= card.link %>" <%= card.link.startsWith('http') ? 'target="_blank" rel="noreferrer"' : '' %>><%= card.linkLabel %></a>
             </article>
           <% }) %>
+        </div>
+      </section>
+
+      <section class="shop-reel reveal">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Shop Reel</p>
+            <h2>A moving look at the shop, the setup, and the work.</h2>
+          </div>
+        </div>
+        <div class="reel-window">
+          <div class="reel-track">
+            <% [...gallery, ...gallery].forEach((item) => { %>
+              <button
+                class="reel-card"
+                type="button"
+                data-gallery-src="<%= item.image %>"
+                data-gallery-title="<%= item.title %>"
+                data-gallery-text="<%= item.text %>"
+              >
+                <img src="<%= item.image %>" alt="<%= item.title %>" loading="lazy" onerror="this.onerror=null;this.src='/images/interior-wide.jpg'">
+                <span><%= item.title %></span>
+              </button>
+            <% }) %>
+          </div>
         </div>
       </section>
 

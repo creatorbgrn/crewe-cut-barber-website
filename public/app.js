@@ -152,6 +152,46 @@ function setupLightbox() {
   });
 }
 
+function setupHeroMotion() {
+  if (!window.matchMedia("(pointer:fine)").matches) {
+    return;
+  }
+
+  const hero = document.querySelector("[data-hero-parallax]");
+  const visual = document.querySelector(".hero-visual img");
+  const cards = document.querySelectorAll(".floating-card");
+  const statusCard = document.querySelector(".live-status-card");
+
+  if (!hero || !visual) {
+    return;
+  }
+
+  const apply = (x, y) => {
+    visual.style.transform = `translate3d(${x * 10}px, ${y * 12}px, 0) scale(1.02)`;
+
+    cards.forEach((card, index) => {
+      const factor = index === 0 ? 14 : 9;
+      card.style.transform = `translate3d(${x * factor * -1}px, ${y * factor * -1}px, 0)`;
+    });
+
+    if (statusCard) {
+      statusCard.style.transform = `translate3d(${x * -8}px, ${y * -8}px, 0)`;
+    }
+  };
+
+  hero.addEventListener("mousemove", (event) => {
+    const rect = hero.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) - 0.5;
+    const y = ((event.clientY - rect.top) / rect.height) - 0.5;
+    apply(x, y);
+  });
+
+  hero.addEventListener("mouseleave", () => {
+    apply(0, 0);
+  });
+}
+
 updateOpenStatus();
 setupReveal();
 setupLightbox();
+setupHeroMotion();
