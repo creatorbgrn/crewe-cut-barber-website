@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard | <%= business.name %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css?v=1">
+  </head>
+  <body class="admin-body">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <p class="eyebrow">Admin</p>
+        <h1><%= business.name %></h1>
+        <p class="section-copy">Live booking requests stored in Turso.</p>
+        <form action="/admin/logout" method="post">
+          <button class="button button-secondary button-full" type="submit">Log out</button>
+        </form>
+      </aside>
+
+      <main class="admin-main">
+        <section class="admin-meta-grid">
+          <article class="stat-card">
+            <strong><%= bookings.length %></strong>
+            <span>Total bookings</span>
+          </article>
+          <article class="stat-card">
+            <strong><%= bookings.filter((booking) => booking.status === 'new').length %></strong>
+            <span>New requests</span>
+          </article>
+          <article class="stat-card">
+            <strong><%= dbInfo.provider %></strong>
+            <span>Database</span>
+          </article>
+        </section>
+
+        <section class="admin-panel">
+          <div class="section-head">
+            <p class="eyebrow">Backend connection</p>
+            <h2>This dashboard reads from the Turso bookings table.</h2>
+          </div>
+          <div class="backend-points">
+            <div><strong>Provider</strong><span><%= dbInfo.provider %></span></div>
+            <div><strong>Storage active</strong><span><%= dbInfo.hasStorage %></span></div>
+            <div><strong>Booking endpoint</strong><span><%= dbInfo.bookingEndpoint %></span></div>
+          </div>
+        </section>
+
+        <section class="admin-panel">
+          <div class="section-head">
+            <p class="eyebrow">Bookings</p>
+            <h2>Incoming requests</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="bookings-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Service</th>
+                  <th>Slot</th>
+                  <th>Contact</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% bookings.forEach((booking) => { %>
+                  <tr>
+                    <td>
+                      <strong><%= booking.clientName %></strong>
+                      <span><%= booking.createdAt %></span>
+                    </td>
+                    <td><%= booking.service %></td>
+                    <td><%= booking.preferredDay %><br><%= booking.preferredTime %></td>
+                    <td><%= booking.phone %><br><%= booking.email %></td>
+                    <td>
+                      <form action="/admin/bookings/<%= booking.id %>/status" method="post">
+                        <select name="status" onchange="this.form.submit()">
+                          <% ['new', 'contacted', 'confirmed', 'completed'].forEach((status) => { %>
+                            <option value="<%= status %>" <%= booking.status === status ? 'selected' : '' %>>
+                              <%= status %>
+                            </option>
+                          <% }) %>
+                        </select>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+                <% if (!bookings.length) { %>
+                  <tr>
+                    <td colspan="5">No bookings yet.</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
