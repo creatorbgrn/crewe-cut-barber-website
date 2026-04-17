@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard | Crewe Cut Barber</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body class="admin-body">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <p class="eyebrow">Admin</p>
+        <h1>Crewe Cut Barber</h1>
+        <p class="section-copy">
+          Sign in with the Supabase admin account, review booking requests, and update statuses from one place.
+        </p>
+        <div class="backend-points admin-notes">
+          <div><strong>Auth</strong><span>Email and password login is handled by Supabase Auth.</span></div>
+          <div><strong>Data</strong><span>Bookings are read from the Supabase `bookings` table.</span></div>
+        </div>
+        <button class="button button-secondary button-full" id="logout-button" type="button" hidden>Log out</button>
+      </aside>
+
+      <main class="admin-main">
+        <section class="admin-panel" id="admin-auth-panel">
+          <div class="section-head">
+            <p class="eyebrow">Admin access</p>
+            <h2>Review and manage booking requests.</h2>
+          </div>
+          <p class="section-copy">Use the Supabase email and password for the shop admin account.</p>
+          <div class="form-message" id="admin-feedback" hidden></div>
+          <form class="booking-form" id="admin-login-form">
+            <label>
+              Email
+              <input type="email" name="email" autocomplete="username" required>
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" autocomplete="current-password" required>
+            </label>
+            <button class="button button-primary button-full" id="admin-login-button" type="submit">Log in</button>
+          </form>
+        </section>
+
+        <section class="admin-meta-grid" id="admin-stats" hidden></section>
+
+        <section class="admin-panel" id="admin-dashboard" hidden>
+          <div class="section-head">
+            <p class="eyebrow">Bookings</p>
+            <h2>Incoming requests</h2>
+          </div>
+          <div class="form-message" id="admin-dashboard-feedback" hidden></div>
+          <div class="mobile-bookings" id="mobile-bookings"></div>
+          <div class="table-wrap">
+            <table class="bookings-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Service</th>
+                  <th>Slot</th>
+                  <th>Contact</th>
+                  <th>Notes</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="bookings-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/config.js"></script>
+    <script src="/admin.js"></script>
+  </body>
+</html>
