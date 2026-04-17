@@ -1,17 +1,19 @@
 :root {
-  --bg: #111111;
-  --bg-soft: #1a1a1a;
-  --panel: #181818;
+  --bg: #0d0f11;
+  --bg-soft: #161a1d;
+  --panel: rgba(255, 255, 255, 0.05);
+  --panel-strong: rgba(255, 255, 255, 0.075);
   --paper: #f6f0e8;
-  --text: #f7f3ed;
-  --muted: #beb1a4;
-  --accent: #d2a05d;
-  --accent-deep: #9d6a2f;
+  --text: #f4efe8;
+  --muted: #b8afa3;
+  --accent: #d4a468;
+  --accent-deep: #9b6831;
   --line: rgba(255, 255, 255, 0.1);
-  --shadow: 0 30px 70px rgba(0, 0, 0, 0.28);
-  --radius-lg: 32px;
-  --radius-md: 20px;
-  --radius-sm: 14px;
+  --line-strong: rgba(212, 164, 104, 0.18);
+  --shadow: 0 35px 90px rgba(0, 0, 0, 0.34);
+  --radius-lg: 34px;
+  --radius-md: 22px;
+  --radius-sm: 16px;
 }
 
 * {
@@ -27,9 +29,9 @@ body {
   font-family: "Manrope", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at top left, rgba(210, 160, 93, 0.18), transparent 30%),
-    radial-gradient(circle at right center, rgba(255, 255, 255, 0.05), transparent 18%),
-    linear-gradient(180deg, #121212 0%, #0d0d0d 100%);
+    radial-gradient(circle at top left, rgba(212, 164, 104, 0.16), transparent 24%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.06), transparent 18%),
+    linear-gradient(180deg, #111315 0%, #090a0b 100%);
 }
 
 a {
@@ -49,6 +51,10 @@ select {
   font: inherit;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
@@ -60,7 +66,7 @@ code {
 
 .topbar {
   border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.025);
 }
 
 .topbar-inner {
@@ -78,7 +84,7 @@ code {
   top: 0;
   z-index: 20;
   backdrop-filter: blur(18px);
-  background: rgba(17, 17, 17, 0.8);
+  background: rgba(13, 15, 17, 0.78);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -131,7 +137,6 @@ h3 {
 .reasons,
 .services,
 .gallery,
-.signature,
 .faq,
 .booking {
   padding: 4rem 0;
@@ -139,7 +144,6 @@ h3 {
 
 .hero-grid,
 .story-grid,
-.signature-grid,
 .booking-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -174,8 +178,9 @@ h2 {
 .lead,
 .section-copy {
   color: var(--muted);
-  line-height: 1.8;
-  font-size: 1.03rem;
+  line-height: 1.78;
+  font-size: 1.04rem;
+  max-width: 60ch;
 }
 
 .pill-row {
@@ -187,30 +192,40 @@ h2 {
 
 .info-pill,
 .service-card.featured::before {
-  background: rgba(210, 160, 93, 0.12);
+  background: rgba(212, 164, 104, 0.1);
   color: var(--accent);
 }
 
 .info-pill {
-  padding: 0.7rem 0.95rem;
+  padding: 0.72rem 1rem;
   border-radius: 999px;
-  border: 1px solid rgba(210, 160, 93, 0.18);
+  border: 1px solid var(--line-strong);
+  letter-spacing: 0.01em;
 }
 
 .hero-actions {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
+  margin-bottom: 1.4rem;
 }
 
-.live-status-card {
-  max-width: 360px;
-  padding: 1rem 1.05rem;
+.hero-bottom-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.live-status-card,
+.hero-quote-card {
+  padding: 1.05rem 1.1rem;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(210, 160, 93, 0.18);
-  background: rgba(210, 160, 93, 0.09);
-  margin-bottom: 2rem;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.025)),
+    rgba(255, 255, 255, 0.02);
+  box-shadow: var(--shadow);
 }
 
 .live-status-label {
@@ -234,6 +249,21 @@ h2 {
   line-height: 1.6;
 }
 
+.hero-quote-kicker {
+  display: inline-flex;
+  margin-bottom: 0.6rem;
+  color: var(--accent);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-quote-card p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.7;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -250,13 +280,19 @@ h2 {
   transform: translateY(-2px);
 }
 
+.button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
 .button-primary {
   background: linear-gradient(135deg, var(--accent), #e8bc7b);
   color: #1f1409;
 }
 
 .button-secondary {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.03);
   border-color: var(--line);
   color: var(--text);
 }
@@ -286,7 +322,9 @@ h2 {
 .admin-sidebar,
 .floating-card {
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    linear-gradient(180deg, var(--panel-strong), var(--panel)),
+    rgba(255, 255, 255, 0.03);
   border-radius: var(--radius-md);
 }
 
@@ -301,6 +339,7 @@ h2 {
 .stat-card strong {
   display: block;
   font-size: 1.8rem;
+  margin-bottom: 0.15rem;
 }
 
 .stat-card span,
@@ -319,6 +358,7 @@ h2 {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
   transition: transform 0.35s ease;
+  filter: saturate(0.94) contrast(1.03);
 }
 
 .floating-card {
@@ -336,6 +376,17 @@ h2 {
   letter-spacing: 0.14em;
   font-size: 0.75rem;
   margin-bottom: 0.4rem;
+}
+
+.floating-card strong,
+.floating-card em {
+  display: block;
+}
+
+.floating-card em {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-style: normal;
 }
 
 .floating-top {
@@ -359,58 +410,6 @@ h2 {
   padding-top: 0;
 }
 
-.shop-reel {
-  padding-top: 0;
-}
-
-.reel-window {
-  overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
-
-.reel-track {
-  display: flex;
-  gap: 1rem;
-  width: max-content;
-  padding: 0 1rem;
-  animation: reel-scroll 42s linear infinite;
-}
-
-.reel-window:hover .reel-track {
-  animation-play-state: paused;
-}
-
-.reel-card {
-  position: relative;
-  flex: 0 0 280px;
-  padding: 0;
-  border: 0;
-  border-radius: 24px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.03);
-  box-shadow: var(--shadow);
-  cursor: pointer;
-}
-
-.reel-card img {
-  height: 340px;
-  object-fit: cover;
-}
-
-.reel-card span {
-  position: absolute;
-  left: 1rem;
-  right: 1rem;
-  bottom: 1rem;
-  padding: 0.75rem 0.9rem;
-  border-radius: 999px;
-  background: rgba(10, 10, 10, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #fff;
-  text-align: left;
-  font-weight: 700;
-}
-
 .action-grid,
 .reasons-grid,
 .faq-grid {
@@ -421,24 +420,25 @@ h2 {
 
 .action-card,
 .reason-card,
-.faq-card,
-.signature-points div {
+.faq-card {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    linear-gradient(180deg, var(--panel-strong), var(--panel)),
+    rgba(255, 255, 255, 0.03);
 }
 
 .action-card,
 .reason-card,
 .faq-card {
-  padding: 1.35rem;
+  padding: 1.45rem;
 }
 
 .action-card h3,
 .reason-card h3,
 .faq-card h3 {
   margin: 0 0 0.7rem;
-  font-size: 1.7rem;
+  font-size: 1.52rem;
 }
 
 .action-card p,
@@ -489,7 +489,7 @@ h2 {
 
 .service-card {
   position: relative;
-  padding: 1.3rem;
+  padding: 1.4rem;
 }
 
 .service-card.featured::before {
@@ -524,6 +524,7 @@ h2 {
   overflow: hidden;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .gallery-button {
@@ -559,37 +560,6 @@ h2 {
 
 .gallery-overlay p {
   color: rgba(255, 255, 255, 0.8);
-}
-
-.signature-photo img {
-  min-height: 580px;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-}
-
-.signature-copy {
-  display: grid;
-  gap: 1rem;
-}
-
-.signature-points {
-  display: grid;
-  gap: 0.85rem;
-}
-
-.signature-points div {
-  padding: 1rem 1.1rem;
-}
-
-.signature-points strong {
-  display: block;
-  margin-bottom: 0.35rem;
-  color: var(--accent);
-}
-
-.signature-points span {
-  color: var(--muted);
 }
 
 .backend-points {
@@ -944,16 +914,6 @@ h2 {
   transform: translateY(0);
 }
 
-@keyframes reel-scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(calc(-50% - 0.5rem));
-  }
-}
-
 .mobile-cta-bar {
   position: fixed;
   left: 50%;
@@ -990,7 +950,6 @@ h2 {
 @media (max-width: 1040px) {
   .hero-grid,
   .story-grid,
-  .signature-grid,
   .booking-grid,
   .admin-shell {
     grid-template-columns: 1fr;
@@ -1008,6 +967,10 @@ h2 {
   }
 
   .reasons-head {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-bottom-row {
     grid-template-columns: 1fr;
   }
 
@@ -1097,7 +1060,6 @@ h2 {
   .reasons,
   .services,
   .gallery,
-  .signature,
   .faq,
   .booking {
     padding: 2.5rem 0;
@@ -1105,7 +1067,6 @@ h2 {
 
   .hero-grid,
   .story-grid,
-  .signature-grid,
   .booking-grid {
     gap: 1.25rem;
   }
@@ -1176,21 +1137,12 @@ h2 {
     min-height: 300px;
   }
 
-  .hero-visual img,
-  .signature-photo img {
+  .hero-visual img {
     min-height: 380px;
   }
 
   .gallery-grid {
     grid-auto-rows: 220px;
-  }
-
-  .reel-card {
-    flex-basis: 220px;
-  }
-
-  .reel-card img {
-    height: 280px;
   }
 
   .gallery-card-1 {
@@ -1202,8 +1154,7 @@ h2 {
     align-items: flex-start;
   }
 
-  .backend-points div,
-  .signature-points div {
+  .backend-points div {
     padding: 0.9rem;
   }
 
