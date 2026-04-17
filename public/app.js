@@ -249,7 +249,7 @@ function setupBookingForm() {
       setFeedback(
         feedback,
         "error",
-        "Supabase is not configured yet. Add your project URL and anon key in public/config.js before deploying."
+        "The booking form is not ready yet. Please call the shop for now."
       );
       return;
     }
@@ -290,7 +290,7 @@ function setupBookingForm() {
       setFeedback(
         feedback,
         "error",
-        "The booking request could not be sent just now. Check the Supabase table and policies, then try again."
+        "We could not send your request right now. Please try again or call the shop."
       );
       console.error(error);
       return;
@@ -300,7 +300,7 @@ function setupBookingForm() {
     if (preferredDayInput) {
       preferredDayInput.min = new Date().toISOString().slice(0, 10);
     }
-    setFeedback(feedback, "success", "Booking request saved successfully.");
+    setFeedback(feedback, "success", "Thanks. Your request has been sent and the shop will be in touch soon.");
   });
 }
 
