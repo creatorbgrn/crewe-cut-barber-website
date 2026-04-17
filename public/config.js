@@ -1,4 +1,4 @@
 window.CREWE_CUT_CONFIG = {
-  supabaseUrl: "https://YOUR_PROJECT.supabase.co",
-  supabaseAnonKey: "YOUR_SUPABASE_ANON_KEY"
+  supabaseUrl: "https://fefjufwpurivcxkatrxg.supabase.co",
+  supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlZmp1ZndwdXJpdmN4a2F0cnhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MjI5MjEsImV4cCI6MjA5MTk5ODkyMX0.qe1-Mf5SplzAxaVZxgDe3Y4YTukRxSyA0LoXqE3hBEw"
 };
