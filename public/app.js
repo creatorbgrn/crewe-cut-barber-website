@@ -1,7 +1,32 @@
 const schedule = [
-  { days: [1, 2, 3, 4, 5, 6], open: { hour: 9, minute: 0 }, close: { hour: 19, minute: 0 }, label: "9:00AM - 7:00PM" },
-  { days: [0], open: { hour: 10, minute: 0 }, close: { hour: 18, minute: 0 }, label: "10:00AM - 6:00PM" }
+  { days: [1, 2, 3, 4, 5, 6], open: { hour: 9, minute: 0 }, close: { hour: 19, minute: 0 } },
+  { days: [0], open: { hour: 10, minute: 0 }, close: { hour: 18, minute: 0 } }
 ];
+
+const config = window.CREWE_CUT_CONFIG || {};
+let supabaseClient = null;
+
+function hasSupabaseConfig() {
+  return Boolean(
+    config.supabaseUrl &&
+    config.supabaseAnonKey &&
+    !config.supabaseUrl.includes("YOUR_PROJECT") &&
+    !config.supabaseAnonKey.includes("YOUR_SUPABASE_ANON_KEY")
+  );
+}
+
+function getSupabaseClient() {
+  if (supabaseClient) {
+    return supabaseClient;
+  }
+
+  if (!hasSupabaseConfig() || !window.supabase?.createClient) {
+    return null;
+  }
+
+  supabaseClient = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
+  return supabaseClient;
+}
 
 function minutesOf(dayConfig, type) {
   return (dayConfig[type].hour * 60) + dayConfig[type].minute;
@@ -23,10 +48,10 @@ function getScheduleForDay(day) {
 function getNextOpening(now) {
   for (let offset = 0; offset < 7; offset += 1) {
     const day = (now.getDay() + offset) % 7;
-    const config = getScheduleForDay(day);
+    const configForDay = getScheduleForDay(day);
 
-    if (config) {
-      return { offset, config, day };
+    if (configForDay) {
+      return { offset, config: configForDay };
     }
   }
 
@@ -58,7 +83,7 @@ function updateOpenStatus() {
     const nextOpening = getNextOpening(now);
 
     if (nextOpening) {
-      const { offset, config } = nextOpening;
+      const { offset, config: upcoming } = nextOpening;
       const dayLabel = offset === 0
         ? "today"
         : offset === 1
@@ -68,8 +93,8 @@ function updateOpenStatus() {
             );
 
       title = "Currently closed";
-      copy = `Opens ${dayLabel} at ${formatTime(config.open.hour, config.open.minute)}.`;
-      topbar = `Closed now, opens ${dayLabel} at ${formatTime(config.open.hour, config.open.minute)}`;
+      copy = `Opens ${dayLabel} at ${formatTime(upcoming.open.hour, upcoming.open.minute)}.`;
+      topbar = `Closed now, opens ${dayLabel} at ${formatTime(upcoming.open.hour, upcoming.open.minute)}`;
     }
   }
 
@@ -191,7 +216,96 @@ function setupHeroMotion() {
   });
 }
 
+function setFeedback(element, type, message) {
+  if (!element) {
+    return;
+  }
+
+  element.hidden = false;
+  element.className = `form-message ${type}`;
+  element.textContent = message;
+}
+
+function setupBookingForm() {
+  const form = document.getElementById("booking-form");
+  const feedback = document.getElementById("booking-feedback");
+  const submitButton = document.getElementById("booking-submit");
+  const preferredDayInput = form?.querySelector("input[name='preferredDay']");
+
+  if (!form || !feedback || !submitButton) {
+    return;
+  }
+
+  if (preferredDayInput) {
+    preferredDayInput.min = new Date().toISOString().slice(0, 10);
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    feedback.hidden = true;
+
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      setFeedback(
+        feedback,
+        "error",
+        "Supabase is not configured yet. Add your project URL and anon key in public/config.js before deploying."
+      );
+      return;
+    }
+
+    const formData = new FormData(form);
+    const payload = {
+      client_name: String(formData.get("clientName") || "").trim(),
+      phone: String(formData.get("phone") || "").trim(),
+      email: String(formData.get("email") || "").trim(),
+      service: String(formData.get("service") || "").trim(),
+      preferred_day: String(formData.get("preferredDay") || "").trim(),
+      preferred_time: String(formData.get("preferredTime") || "").trim(),
+      notes: String(formData.get("notes") || "").trim(),
+      status: "new"
+    };
+
+    if (
+      !payload.client_name ||
+      !payload.phone ||
+      !payload.email ||
+      !payload.service ||
+      !payload.preferred_day ||
+      !payload.preferred_time
+    ) {
+      setFeedback(feedback, "error", "Please fill in all required fields.");
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending request...";
+
+    const { error } = await supabase.from("bookings").insert([payload]);
+
+    submitButton.disabled = false;
+    submitButton.textContent = "Send booking request";
+
+    if (error) {
+      setFeedback(
+        feedback,
+        "error",
+        "The booking request could not be sent just now. Check the Supabase table and policies, then try again."
+      );
+      console.error(error);
+      return;
+    }
+
+    form.reset();
+    if (preferredDayInput) {
+      preferredDayInput.min = new Date().toISOString().slice(0, 10);
+    }
+    setFeedback(feedback, "success", "Booking request saved successfully.");
+  });
+}
+
 updateOpenStatus();
 setupReveal();
 setupLightbox();
 setupHeroMotion();
+setupBookingForm();
