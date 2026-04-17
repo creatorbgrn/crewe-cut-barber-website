@@ -10,7 +10,7 @@
   --accent-deep: #9b6831;
   --line: rgba(255, 255, 255, 0.1);
   --line-strong: rgba(212, 164, 104, 0.18);
-  --shadow: 0 35px 90px rgba(0, 0, 0, 0.34);
+  --shadow: 0 28px 70px rgba(0, 0, 0, 0.3);
   --radius-lg: 34px;
   --radius-md: 22px;
   --radius-sm: 16px;
@@ -264,6 +264,37 @@ h2 {
   line-height: 1.7;
 }
 
+.hero-service-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.hero-service-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--line);
+}
+
+.hero-service-list li:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.hero-service-list span {
+  color: var(--muted);
+}
+
+.hero-service-list strong {
+  color: var(--text);
+  font-size: 1rem;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -353,7 +384,7 @@ h2 {
 }
 
 .hero-visual img {
-  min-height: 620px;
+  min-height: 580px;
   object-fit: cover;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
@@ -493,7 +524,7 @@ h2 {
 }
 
 .service-card.featured::before {
-  content: "Most requested";
+  content: "Popular";
   display: inline-flex;
   padding: 0.45rem 0.75rem;
   border-radius: 999px;
@@ -509,7 +540,7 @@ h2 {
 
 .service-card p {
   color: var(--muted);
-  line-height: 1.75;
+  line-height: 1.65;
 }
 
 .gallery-grid {
@@ -559,7 +590,7 @@ h2 {
 }
 
 .gallery-overlay p {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.84);
 }
 
 .backend-points {
@@ -581,6 +612,9 @@ h2 {
 .backend-points strong {
   color: var(--accent);
   min-width: 90px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
 }
 
 .backend-points span {
@@ -1159,7 +1193,7 @@ h2 {
   }
 
   .backend-points strong {
-    min-width: 72px;
+    min-width: 76px;
   }
 
   .bookings-table th,
