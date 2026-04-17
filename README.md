@@ -6,7 +6,7 @@ Static frontend for Crewe Cut Barber with Supabase handling:
 - admin authentication
 - booking status management
 
-This version is designed to deploy from a GitHub repository to a static host such as Cloudflare Pages, Netlify, or Vercel. The site itself lives in `public/`, and Supabase provides the backend.
+This version is designed to deploy from a GitHub repository to a static host such as GitHub Pages, Cloudflare Pages, Netlify, or Vercel. The site itself lives in `public/`, and Supabase provides the backend.
 
 ## Project structure
 
@@ -40,12 +40,16 @@ The anon key is safe to use in the frontend as long as your Row Level Security p
 ## Deployment through GitHub
 
 1. Put this project in a GitHub repository.
-2. Connect that repo to your host.
-3. Set the publish/output directory to `public`.
+2. If you want GitHub Pages, keep the `.github/workflows/deploy-pages.yml` workflow in place and enable Pages to build from GitHub Actions.
+3. For other static hosts, connect the repo to your host and set the publish/output directory to `public`.
 4. Leave the build command empty for a direct static deploy.
 5. Point your custom domain at the deployed site.
 
-Recommended host for a no-monthly-cost setup: Cloudflare Pages connected to GitHub.
+For a GitHub Pages project site, the default URL will be:
+
+`https://creatorbgrn.github.io/crewe-cut-barber-website/`
+
+GitHub says project sites publish under `https://<owner>.github.io/<repositoryname>`, and GitHub Actions is the recommended way to deploy Pages sites.
 
 ## Admin flow
 
