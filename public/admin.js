@@ -93,7 +93,12 @@ function renderStats(bookings) {
     new: bookings.filter((booking) => booking.status === "new").length,
     contacted: bookings.filter((booking) => booking.status === "contacted").length,
     confirmed: bookings.filter((booking) => booking.status === "confirmed").length,
-    completed: bookings.filter((booking) => booking.status === "completed").length
+    completed: bookings.filter((booking) => booking.status === "completed").length,
+    today: bookings.filter((booking) => {
+      const createdAt = new Date(booking.created_at);
+      const today = new Date();
+      return createdAt.toDateString() === today.toDateString();
+    }).length
   };
 
   statsGrid.hidden = false;
@@ -107,8 +112,8 @@ function renderStats(bookings) {
       <span>New requests</span>
     </article>
     <article class="stat-card">
-      <strong>Supabase</strong>
-      <span>Database</span>
+      <strong>${counts.today}</strong>
+      <span>Added today</span>
     </article>
     <article class="stat-card">
       <strong>${counts.confirmed}</strong>
