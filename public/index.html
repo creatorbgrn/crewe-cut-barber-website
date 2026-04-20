@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260420-client-ready">
   </head>
   <body>
     <div class="topbar">
@@ -32,10 +32,10 @@
           <span class="brand-sub">Edinburgh</span>
         </a>
         <nav class="nav-links">
-          <a href="#about">About</a>
           <a href="#services">Services</a>
           <a href="#gallery">Gallery</a>
           <a href="#booking">Book</a>
+          <a href="#contact">Contact</a>
         </nav>
       </div>
     </header>
@@ -63,35 +63,18 @@
               <a class="button button-secondary" href="tel:01316294160">Call the shop</a>
             </div>
 
-            <div class="hero-bottom-row">
-              <div class="live-status-card">
-                <span class="live-status-label">Shop status</span>
-                <strong id="live-status-title">Checking opening hours</strong>
-                <p id="live-status-copy">Loading current opening status.</p>
-              </div>
-
-              <div class="hero-quote-card">
-                <span class="hero-quote-kicker">Popular services</span>
-                <ul class="hero-service-list">
-                  <li><span>Haircut</span><strong>£15</strong></li>
-                  <li><span>Skin or Zero Fade</span><strong>£17</strong></li>
-                  <li><span>Beard Trim</span><strong>£8</strong></li>
-                </ul>
-              </div>
-            </div>
-
             <div class="stats-grid">
               <article class="stat-card">
-                <strong>4.7</strong>
-                <span>Google rating</span>
+                <strong>Haircut</strong>
+                <span>£15</span>
               </article>
               <article class="stat-card">
-                <strong>120+</strong>
-                <span>Reviews</span>
+                <strong>Skin Fade</strong>
+                <span>£17</span>
               </article>
               <article class="stat-card">
-                <strong>7 days</strong>
-                <span>Open every week</span>
+                <strong id="live-status-title">Open 7 days</strong>
+                <span id="live-status-copy">Mon-Sat 9AM-7PM</span>
               </article>
             </div>
           </div>
@@ -107,37 +90,6 @@
               <strong>218 Boswall Parkway</strong>
               <em>Edinburgh, EH5 2LX</em>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="about" class="story reveal">
-        <div class="container story-grid">
-          <div>
-            <p class="eyebrow">About</p>
-            <h2>Local barber shop. Fair prices. Clean finish.</h2>
-            <p class="section-copy">
-              Crewe Cut Barber focuses on good service, solid barbering, and straightforward pricing.
-              Whether it is a regular trim, a fresh fade, or beard work, the aim is simple: leave looking sharp.
-            </p>
-            <div class="hours-grid">
-              <div class="hour-card">
-                <strong>Monday to Saturday</strong>
-                <span>9:00AM - 7:00PM</span>
-              </div>
-              <div class="hour-card">
-                <strong>Sunday</strong>
-                <span>10:00AM - 6:00PM</span>
-              </div>
-              <div class="hour-card">
-                <strong>Walk-ins</strong>
-                <span>Welcome every day</span>
-              </div>
-            </div>
-          </div>
-          <div class="story-photo-stack">
-            <img class="story-main" src="images/interior-wide.jpg" alt="Crewe Cut Barber interior" onerror="this.onerror=null;this.src='images/interior-row.jpg'">
-            <img class="story-side" src="images/cut-detail.jpg" alt="Haircut detail at Crewe Cut Barber" onerror="this.onerror=null;this.src='images/fade-finish.jpg'">
           </div>
         </div>
       </section>
@@ -315,6 +267,8 @@
               <strong>Crewe Cut Barber</strong>
               <span>218 Boswall Parkway, Edinburgh, EH5 2LX</span>
               <a href="tel:01316294160">0131 629 4160</a>
+              <span>Mon-Sat 9:00AM - 7:00PM</span>
+              <span>Sunday 10:00AM - 6:00PM</span>
             </div>
           </div>
 
@@ -373,7 +327,7 @@
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer" id="contact">
       <div class="container footer-row">
         <div>
           <strong>Crewe Cut Barber</strong>
@@ -408,6 +362,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="config.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=20260420-client-ready"></script>
   </body>
 </html>
