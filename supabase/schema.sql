@@ -21,6 +21,12 @@ create table if not exists public.admin_users (
   created_at timestamptz not null default timezone('utc', now())
 );
 
+create table if not exists public.site_settings (
+  key text primary key,
+  settings jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default timezone('utc', now())
+);
+
 create or replace function public.is_admin()
 returns boolean
 language sql
@@ -38,8 +44,26 @@ $$;
 revoke all on function public.is_admin() from public;
 grant execute on function public.is_admin() to anon, authenticated;
 
+create or replace function public.get_slot_booking_count(p_day date, p_time time)
+returns integer
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select count(*)::integer
+  from public.bookings
+  where preferred_day = p_day
+    and preferred_time = p_time
+    and status in ('new', 'contacted', 'confirmed');
+$$;
+
+revoke all on function public.get_slot_booking_count(date, time) from public;
+grant execute on function public.get_slot_booking_count(date, time) to anon, authenticated;
+
 alter table public.bookings enable row level security;
 alter table public.admin_users enable row level security;
+alter table public.site_settings enable row level security;
 
 drop policy if exists "Public can insert bookings" on public.bookings;
 create policy "Public can insert bookings"
@@ -70,8 +94,70 @@ create policy "Users can read their own admin row"
   to authenticated
   using (auth.uid() = user_id);
 
+drop policy if exists "Public can read site settings" on public.site_settings;
+create policy "Public can read site settings"
+  on public.site_settings
+  for select
+  to anon, authenticated
+  using (true);
+
+drop policy if exists "Admins can manage site settings" on public.site_settings;
+create policy "Admins can manage site settings"
+  on public.site_settings
+  for all
+  to authenticated
+  using (public.is_admin())
+  with check (public.is_admin());
+
+insert into public.site_settings (key, settings)
+values ('main', '{}'::jsonb)
+on conflict (key) do nothing;
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'site-photos',
+  'site-photos',
+  true,
+  5242880,
+  array['image/jpeg','image/png','image/webp','image/gif']
+)
+on conflict (id) do update
+set public = excluded.public,
+    file_size_limit = excluded.file_size_limit,
+    allowed_mime_types = excluded.allowed_mime_types;
+
+drop policy if exists "Public can read site photos" on storage.objects;
+create policy "Public can read site photos"
+  on storage.objects
+  for select
+  to anon, authenticated
+  using (bucket_id = 'site-photos');
+
+drop policy if exists "Admins can upload site photos" on storage.objects;
+create policy "Admins can upload site photos"
+  on storage.objects
+  for insert
+  to authenticated
+  with check (bucket_id = 'site-photos' and public.is_admin());
+
+drop policy if exists "Admins can update site photos" on storage.objects;
+create policy "Admins can update site photos"
+  on storage.objects
+  for update
+  to authenticated
+  using (bucket_id = 'site-photos' and public.is_admin())
+  with check (bucket_id = 'site-photos' and public.is_admin());
+
+drop policy if exists "Admins can delete site photos" on storage.objects;
+create policy "Admins can delete site photos"
+  on storage.objects
+  for delete
+  to authenticated
+  using (bucket_id = 'site-photos' and public.is_admin());
+
 comment on table public.bookings is 'Booking requests submitted from the public website.';
 comment on table public.admin_users is 'Supabase auth users who can access the admin dashboard.';
+comment on table public.site_settings is 'Editable website services, gallery photos, and booking availability rules.';
 
 -- After creating your admin user in Supabase Auth, add the user here:
 -- insert into public.admin_users (user_id) values ('YOUR_ADMIN_USER_UUID');
