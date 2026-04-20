@@ -100,7 +100,7 @@
             <p class="eyebrow">Services</p>
             <h2>Haircuts, fades, beard work, shaves, and quick grooming.</h2>
           </div>
-          <div class="services-grid">
+          <div class="services-grid" id="services-grid">
             <article class="service-card reveal featured">
               <div class="service-meta"><span>35 min</span><strong>£15</strong></div>
               <h3>Haircut</h3>
@@ -186,7 +186,7 @@
             <p class="eyebrow">Gallery</p>
             <h2>Inside the shop and work from the chair.</h2>
           </div>
-          <div class="gallery-grid">
+          <div class="gallery-grid" id="gallery-grid">
             <article class="gallery-card reveal gallery-card-1">
               <button class="gallery-button" type="button" data-gallery-src="images/storefront.jpg" data-gallery-title="Shop front" data-gallery-text="Crewe Cut Barber on Boswall Parkway.">
                 <img src="images/storefront.jpg" alt="Shop front" loading="lazy" onerror="this.onerror=null;this.src='images/interior-wide.jpg'">
@@ -288,7 +288,7 @@
             </label>
             <label>
               Service
-              <select name="service" required>
+              <select name="service" id="booking-service" required>
                 <option value="">Select a service</option>
                 <option value="Haircut">Haircut - £15</option>
                 <option value="Skin or Zero Fade">Skin or Zero Fade - £17</option>
@@ -314,9 +314,12 @@
               </label>
               <label>
                 Preferred time
-                <input type="time" name="preferredTime" required>
+                <select name="preferredTime" id="booking-time" required>
+                  <option value="">Select a time</option>
+                </select>
               </label>
             </div>
+            <div class="availability-note" id="availability-note" hidden></div>
             <label>
               Notes
               <textarea name="notes" rows="5" placeholder="Add anything useful about the service or timing."></textarea>
