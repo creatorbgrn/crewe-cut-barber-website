@@ -456,6 +456,21 @@ h3 {
   background: #f8d6d6;
 }
 
+.availability-note {
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(212, 164, 104, 0.26);
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+  background: rgba(212, 164, 104, 0.1);
+  font-weight: 700;
+}
+
+.availability-note.error {
+  color: #ffd8d8;
+  border-color: rgba(245, 118, 118, 0.32);
+  background: rgba(180, 48, 48, 0.16);
+}
+
 .site-footer {
   padding: 1.25rem 0 6rem;
   border-top: 1px solid var(--line);
@@ -683,6 +698,106 @@ h3 {
   border-radius: var(--radius-md);
 }
 
+.admin-help-text {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.settings-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.settings-row {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.settings-row-head,
+.settings-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.settings-actions {
+  justify-content: flex-end;
+}
+
+.settings-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.settings-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.settings-grid-4 {
+  grid-template-columns: 1.2fr 0.75fr 0.65fr 1.6fr;
+}
+
+.settings-grid label {
+  display: grid;
+  gap: 0.42rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.settings-grid input,
+.settings-grid select,
+.settings-grid textarea {
+  width: 100%;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.settings-photo-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.settings-photo-row img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.mini-button {
+  min-height: 34px;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.mini-button.danger {
+  color: #ffc7c7;
+  border-color: rgba(245, 118, 118, 0.24);
+  background: rgba(180, 48, 48, 0.12);
+}
+
 .admin-list-side {
   text-align: right;
 }
@@ -859,7 +974,9 @@ h3 {
   .gallery-grid,
   .stats-grid,
   .admin-meta-grid,
-  .split-fields {
+  .split-fields,
+  .settings-grid-4,
+  .settings-photo-row {
     grid-template-columns: 1fr;
   }
 
