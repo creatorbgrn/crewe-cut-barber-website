@@ -19,7 +19,10 @@ const servicesSettingsList = document.getElementById("services-settings-list");
 const gallerySettingsList = document.getElementById("gallery-settings-list");
 const addServiceButton = document.getElementById("add-service-button");
 const addPhotoButton = document.getElementById("add-photo-button");
-const saveSettingsButton = document.getElementById("save-settings-button");
+const settingsSaveButtons = document.querySelectorAll(".site-settings-save");
+const refreshBookingsButton = document.getElementById("refresh-bookings-button");
+const bookingSearchInput = document.getElementById("booking-search-input");
+const bookingStatusFilter = document.getElementById("booking-status-filter");
 const maxBookingsInput = document.getElementById("max-bookings-input");
 const slotIntervalInput = document.getElementById("slot-interval-input");
 const unavailableDatesInput = document.getElementById("unavailable-dates-input");
@@ -27,6 +30,7 @@ const unavailableSlotsInput = document.getElementById("unavailable-slots-input")
 
 let supabaseClient = null;
 let siteSettings = null;
+let allBookings = [];
 
 const defaultServices = [
   { name: "Haircut", duration: "35 min", price: "£15", description: "Standard haircut with a tidy finish.", featured: true, active: true },
@@ -105,6 +109,13 @@ function clearFeedback(element) {
   element.hidden = true;
   element.textContent = "";
   element.className = "form-message";
+}
+
+function setSaveButtonsState(isSaving) {
+  settingsSaveButtons.forEach((button) => {
+    button.disabled = isSaving;
+    button.textContent = isSaving ? "Saving..." : "Save changes";
+  });
 }
 
 function escapeHtml(value) {
@@ -280,8 +291,7 @@ async function saveSiteSettings() {
   }
 
   clearFeedback(dashboardFeedback);
-  saveSettingsButton.disabled = true;
-  saveSettingsButton.textContent = "Saving...";
+  setSaveButtonsState(true);
 
   try {
     collectSettingsFromForms();
@@ -313,8 +323,7 @@ async function saveSiteSettings() {
     console.error(error);
     setFeedback(dashboardFeedback, "error", error.message || "Website settings could not be saved.");
   } finally {
-    saveSettingsButton.disabled = false;
-    saveSettingsButton.textContent = "Save settings";
+    setSaveButtonsState(false);
   }
 }
 
@@ -489,14 +498,34 @@ function renderClients(bookings) {
   `).join("");
 }
 
+function getFilteredBookings() {
+  const search = String(bookingSearchInput?.value || "").trim().toLowerCase();
+  const status = bookingStatusFilter?.value || "all";
+
+  return allBookings.filter((booking) => {
+    const matchesStatus = status === "all" || booking.status === status;
+    const haystack = [
+      booking.client_name,
+      booking.service,
+      booking.phone,
+      booking.email,
+      booking.notes,
+      booking.preferred_day,
+      booking.preferred_time
+    ].join(" ").toLowerCase();
+
+    return matchesStatus && (!search || haystack.includes(search));
+  });
+}
+
 function renderBookings(bookings) {
   if (!mobileBookings || !tableBody) {
     return;
   }
 
   if (!bookings.length) {
-    mobileBookings.innerHTML = '<div class="mobile-booking-empty">No requests yet.</div>';
-    tableBody.innerHTML = '<tr><td colspan="6">No requests yet.</td></tr>';
+    mobileBookings.innerHTML = '<div class="mobile-booking-empty">No matching requests.</div>';
+    tableBody.innerHTML = '<tr><td colspan="6">No matching requests.</td></tr>';
     return;
   }
 
@@ -619,6 +648,7 @@ async function loadBookings() {
 
   const bookings = data || [];
   const today = getTodayString();
+  allBookings = bookings;
 
   renderStats(bookings);
   renderOverviewList(latestBookings, bookings.slice(0, 6), "No recent requests.");
@@ -628,7 +658,7 @@ async function loadBookings() {
     "No requests scheduled for today."
   );
   renderClients(bookings);
-  renderBookings(bookings);
+  renderBookings(getFilteredBookings());
 }
 
 async function updateBookingStatus(bookingId, status) {
@@ -749,6 +779,17 @@ sectionButtons.forEach((button) => {
   });
 });
 
+refreshBookingsButton?.addEventListener("click", loadBookings);
+
+[bookingSearchInput, bookingStatusFilter].forEach((input) => {
+  input?.addEventListener("input", () => {
+    renderBookings(getFilteredBookings());
+  });
+  input?.addEventListener("change", () => {
+    renderBookings(getFilteredBookings());
+  });
+});
+
 addServiceButton?.addEventListener("click", () => {
   collectSettingsFromForms();
   siteSettings.services.push({
@@ -798,7 +839,9 @@ gallerySettingsList?.addEventListener("click", (event) => {
   renderSettingsForms();
 });
 
-saveSettingsButton?.addEventListener("click", saveSiteSettings);
+settingsSaveButtons.forEach((button) => {
+  button.addEventListener("click", saveSiteSettings);
+});
 loginForm?.addEventListener("submit", handleLogin);
 logoutButton?.addEventListener("click", handleLogout);
 refreshSessionState();
