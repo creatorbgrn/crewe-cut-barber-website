@@ -589,11 +589,15 @@ h3 {
   display: grid;
   place-items: center;
   padding: 1rem;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(212, 164, 104, 0.2), transparent 30%),
+    linear-gradient(135deg, #090b0d, #111316 62%, #1a1209);
 }
 
 .admin-login-card {
   width: min(410px, 100%);
-  padding: 1.35rem;
+  padding: 1.5rem;
+  border-color: rgba(212, 164, 104, 0.22);
 }
 
 .admin-login-card h1,
@@ -618,6 +622,13 @@ h3 {
 
 .admin-topbar {
   padding: 0.85rem 1rem;
+}
+
+.admin-app {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(212, 164, 104, 0.11), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 380px);
 }
 
 .admin-topbar-brand {
@@ -646,6 +657,11 @@ h3 {
   background: rgba(212, 164, 104, 0.12);
 }
 
+.admin-view-site {
+  min-height: 40px;
+  white-space: nowrap;
+}
+
 .admin-layout {
   padding: 1rem;
 }
@@ -671,8 +687,43 @@ h3 {
   font-size: 1.55rem;
 }
 
+.admin-section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: flex-end;
+}
+
 .admin-panel h3 {
   font-size: 1.05rem;
+}
+
+.admin-toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(180px, 260px);
+  gap: 0.85rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.admin-toolbar label {
+  display: grid;
+  gap: 0.42rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.admin-toolbar input,
+.admin-toolbar select,
+.status-form select {
+  width: 100%;
+  padding: 0.78rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.045);
 }
 
 .admin-list {
@@ -806,6 +857,10 @@ h3 {
   overflow-x: auto;
 }
 
+.table-panel {
+  padding: 0;
+}
+
 .bookings-table {
   width: 100%;
   border-collapse: collapse;
@@ -813,10 +868,22 @@ h3 {
 
 .bookings-table th,
 .bookings-table td {
-  padding: 0.95rem 0.75rem;
+  padding: 1rem;
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
+}
+
+.bookings-table th {
+  color: var(--muted);
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.bookings-table tr:last-child td {
+  border-bottom: 0;
 }
 
 .bookings-table td span {
@@ -913,6 +980,10 @@ h3 {
     align-items: flex-start;
     flex-direction: column;
   }
+
+  .admin-toolbar {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 680px) {
@@ -999,6 +1070,15 @@ h3 {
   .mobile-booking-head {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .admin-section-actions {
+    width: 100%;
+  }
+
+  .admin-section-actions .button,
+  .admin-view-site {
+    width: 100%;
   }
 
   .admin-list-side {
