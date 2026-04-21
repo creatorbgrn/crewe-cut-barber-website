@@ -9,7 +9,7 @@ window.CREWE_CUT_CONFIG = {
     return;
   }
 
-  const version = "202604211720-admin-analytics";
+  const version = "202604211745-admin-pro";
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
   stylesheet.href = `admin-enhancements.css?v=${version}`;

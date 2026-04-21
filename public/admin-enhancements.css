@@ -1,3 +1,277 @@
+.admin-body {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(212, 164, 104, 0.16), transparent 32rem),
+    linear-gradient(180deg, #090b0d 0%, #111315 52%, #090b0d 100%);
+}
+
+.admin-app {
+  padding-top: 88px;
+}
+
+.admin-topbar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: minmax(190px, 0.26fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  min-height: 72px;
+  padding: 0.72rem clamp(0.85rem, 2vw, 1.4rem);
+  border-bottom: 1px solid rgba(212, 164, 104, 0.18);
+  background:
+    linear-gradient(180deg, rgba(14, 16, 18, 0.98), rgba(10, 11, 13, 0.94)),
+    rgba(11, 13, 15, 0.96);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(18px);
+}
+
+.admin-topbar-brand strong {
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+}
+
+.admin-topbar-brand span {
+  color: rgba(245, 239, 231, 0.58);
+  font-size: 0.78rem;
+}
+
+.admin-topbar-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.admin-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.28rem;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+  scrollbar-width: none;
+}
+
+.admin-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.admin-nav-button {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0.52rem 0.8rem;
+  border: 0;
+  border-radius: 999px;
+  color: rgba(245, 239, 231, 0.62);
+  background: transparent;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.admin-nav-button:hover,
+.admin-nav-button:focus-visible {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.admin-nav-button.is-active {
+  color: #211508;
+  background: linear-gradient(135deg, var(--accent), #e8bc7b);
+  box-shadow: 0 10px 24px rgba(212, 164, 104, 0.2);
+}
+
+.admin-view-site,
+#logout-button,
+.admin-section-actions .button,
+.site-settings-save {
+  border-color: rgba(255, 255, 255, 0.11);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
+}
+
+.admin-layout {
+  padding: clamp(1rem, 2vw, 1.6rem);
+}
+
+.admin-content {
+  gap: 1.15rem;
+}
+
+.admin-section-head {
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.03)),
+    rgba(255, 255, 255, 0.02);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+}
+
+.admin-section-head .eyebrow {
+  margin-bottom: 0.35rem;
+}
+
+.admin-section h2 {
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+}
+
+.admin-panel,
+.admin-list-item,
+.settings-row,
+.mobile-booking-card,
+.mobile-booking-empty,
+.admin-toolbar {
+  border-color: rgba(255, 255, 255, 0.085);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.035)),
+    rgba(255, 255, 255, 0.02);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+}
+
+.admin-panel {
+  overflow: hidden;
+}
+
+.admin-panel-head {
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.admin-panel h3 {
+  color: rgba(245, 239, 231, 0.94);
+  font-size: 1rem;
+}
+
+.admin-meta-grid .stat-card,
+.sales-summary .stat-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 92px;
+  padding: 1rem;
+  border-color: rgba(212, 164, 104, 0.13);
+}
+
+.admin-meta-grid .stat-card::after,
+.sales-summary .stat-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -18px -24px auto;
+  width: 78px;
+  height: 78px;
+  border-radius: 999px;
+  background: rgba(212, 164, 104, 0.1);
+}
+
+.admin-meta-grid .stat-card strong,
+.sales-summary .stat-card strong {
+  color: var(--accent);
+  font-size: 1.45rem;
+}
+
+.admin-list {
+  gap: 0.65rem;
+}
+
+.admin-list-item,
+.mobile-booking-card,
+.settings-row,
+.legend-item,
+.sales-row {
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.admin-list-item:hover,
+.mobile-booking-card:hover,
+.settings-row:hover,
+.legend-item:hover,
+.sales-row:hover {
+  border-color: rgba(212, 164, 104, 0.22);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.admin-toolbar {
+  padding: 0.9rem;
+}
+
+.admin-toolbar label,
+.settings-grid label,
+.booking-form label {
+  color: rgba(245, 239, 231, 0.68);
+  font-weight: 700;
+}
+
+.admin-toolbar input,
+.admin-toolbar select,
+.admin-section-select-wrap select,
+.status-form select,
+.settings-grid input,
+.settings-grid select,
+.settings-grid textarea,
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(6, 7, 8, 0.42);
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.admin-toolbar input:focus,
+.admin-toolbar select:focus,
+.admin-section-select-wrap select:focus,
+.status-form select:focus,
+.settings-grid input:focus,
+.settings-grid select:focus,
+.settings-grid textarea:focus,
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  border-color: rgba(212, 164, 104, 0.54);
+  background: rgba(6, 7, 8, 0.62);
+  box-shadow: 0 0 0 4px rgba(212, 164, 104, 0.11);
+}
+
+.table-panel {
+  padding: 0;
+}
+
+.bookings-table th {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.bookings-table tbody tr {
+  transition: background 160ms ease;
+}
+
+.bookings-table tbody tr:hover {
+  background: rgba(212, 164, 104, 0.055);
+}
+
+.status-badge {
+  font-weight: 800;
+}
+
+.chart-card {
+  min-height: 250px;
+}
+
+.pie-chart {
+  margin-inline: auto;
+  box-shadow:
+    inset 0 0 0 18px rgba(11, 13, 15, 0.86),
+    0 20px 42px rgba(0, 0, 0, 0.28);
+}
+
+.admin-login-card {
+  border-color: rgba(212, 164, 104, 0.2);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
+    rgba(11, 13, 15, 0.86);
+}
+
 .admin-section-select-wrap {
   display: none;
 }
@@ -106,6 +380,20 @@
 }
 
 @media (max-width: 980px) {
+  .admin-app {
+    padding-top: 138px;
+  }
+
+  .admin-topbar {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .admin-topbar-actions {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
   .analytics-grid,
   .chart-card {
     grid-template-columns: 1fr;
@@ -117,6 +405,24 @@
 }
 
 @media (max-width: 680px) {
+  .admin-app {
+    padding-top: 190px;
+  }
+
+  .admin-topbar {
+    gap: 0.7rem;
+    padding: 0.72rem;
+  }
+
+  .admin-topbar-brand {
+    width: 100%;
+  }
+
+  .admin-topbar-actions {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+  }
+
   .admin-nav {
     display: none;
   }
@@ -130,6 +436,7 @@
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    grid-column: 1 / -1;
   }
 
   .admin-section-select-wrap select {
@@ -140,6 +447,28 @@
     color: var(--text);
     background: rgba(255, 255, 255, 0.045);
     font-size: 16px;
+  }
+
+  .admin-view-site,
+  #logout-button {
+    width: 100%;
+    min-height: 42px;
+  }
+
+  .admin-layout {
+    padding: 0.85rem;
+  }
+
+  .admin-section-head {
+    padding: 0.9rem;
+    border-radius: 18px;
+  }
+
+  .admin-panel,
+  .admin-toolbar,
+  .settings-row,
+  .mobile-booking-card {
+    border-radius: 16px;
   }
 
   .chart-card {
@@ -172,4 +501,10 @@
   .sales-row-side {
     justify-items: start;
   }
+}
+
+.pie-chart {
+  box-shadow:
+    inset 0 0 0 18px rgba(11, 13, 15, 0.86),
+    0 20px 42px rgba(0, 0, 0, 0.28);
 }
