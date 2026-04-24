@@ -189,23 +189,23 @@ function updateOpenStatus() {
   }
 }
 
-function setupScrollAnimations() {
-  const items = document.querySelectorAll(".fade-in:not(.visible)");
+function setupReveal() {
+  const revealItems = document.querySelectorAll(".reveal");
 
-  if (!items.length) {
+  if (!revealItems.length) {
     return;
   }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
+        entry.target.classList.add("revealed");
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+  }, { threshold: 0.14 });
 
-  items.forEach((item, index) => {
+  revealItems.forEach((item, index) => {
     item.style.setProperty("--reveal-delay", `${Math.min(index * 35, 280)}ms`);
     observer.observe(item);
   });
@@ -286,14 +286,12 @@ function renderServices(settings = shopSettings) {
 
   if (grid) {
     grid.innerHTML = services.map((service) => `
-      <article class="service-card fade-in ${service.featured ? "featured" : ""}">
-        <div class="service-card-head">
-          <h3>${escapeHtml(service.name)}</h3>
-          <strong class="service-price">${escapeHtml(service.price || "")}</strong>
-        </div>
+      <article class="service-card reveal ${service.featured ? "featured" : ""}">
         <div class="service-meta">
           <span>${escapeHtml(service.duration || "30 min")}</span>
+          <strong>${escapeHtml(service.price || "")}</strong>
         </div>
+        <h3>${escapeHtml(service.name)}</h3>
         <p>${escapeHtml(service.description || "")}</p>
       </article>
     `).join("");
@@ -309,7 +307,7 @@ function renderServices(settings = shopSettings) {
     }
   }
 
-  setupScrollAnimations();
+  setupReveal();
 }
 
 function renderGallery(settings = shopSettings) {
@@ -321,7 +319,7 @@ function renderGallery(settings = shopSettings) {
   const photos = settings.gallery.filter((photo) => photo.active !== false && photo.src).slice(0, 15);
 
   grid.innerHTML = photos.map((photo, index) => `
-    <article class="gallery-card fade-in gallery-card-${index + 1}">
+    <article class="gallery-card reveal gallery-card-${index + 1}">
       <button class="gallery-button" type="button" data-gallery-src="${escapeAttribute(photo.src)}" data-gallery-title="${escapeAttribute(photo.title || "Shop photo")}" data-gallery-text="${escapeAttribute(photo.text || "")}">
         <img src="${escapeAttribute(photo.src)}" alt="${escapeAttribute(photo.title || "Shop photo")}" loading="lazy" onerror="this.onerror=null;this.src='${escapeAttribute(photo.fallback || "images/interior-wide.jpg")}'">
       </button>
@@ -333,7 +331,7 @@ function renderGallery(settings = shopSettings) {
   `).join("");
 
   setupLightbox();
-  setupScrollAnimations();
+  setupReveal();
 }
 
 function renderTimeOptions(settings = shopSettings) {
@@ -583,4 +581,3 @@ updateOpenStatus();
 setupHeroMotion();
 setupBookingForm();
 loadShopSettings();
-setupScrollAnimations();
