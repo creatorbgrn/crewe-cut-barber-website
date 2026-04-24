@@ -41,6 +41,7 @@ const defaultShopSettings = {
 };
 
 const config = window.CREWE_CUT_CONFIG || {};
+const themeStorageKey = "crewe-cut-theme";
 let supabaseClient = null;
 let shopSettings = structuredClone(defaultShopSettings);
 
@@ -64,6 +65,50 @@ function getSupabaseClient() {
 
   supabaseClient = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
   return supabaseClient;
+}
+
+function getStoredTheme() {
+  const stored = window.localStorage.getItem(themeStorageKey);
+  if (stored === "light" || stored === "dark") {
+    return stored;
+  }
+
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+function applyTheme(theme) {
+  const nextTheme = theme === "light" ? "light" : "dark";
+  document.body.dataset.theme = nextTheme;
+  document.documentElement.style.colorScheme = nextTheme;
+
+  document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+    const icon = button.querySelector("[data-theme-icon]");
+    const label = button.querySelector("[data-theme-label]");
+    const targetTheme = nextTheme === "light" ? "dark" : "light";
+
+    button.setAttribute("aria-label", `Switch to ${targetTheme} theme`);
+    button.setAttribute("aria-pressed", String(nextTheme === "light"));
+
+    if (icon) {
+      icon.textContent = nextTheme === "light" ? "☾" : "☀";
+    }
+
+    if (label) {
+      label.textContent = nextTheme === "light" ? "Dark" : "Light";
+    }
+  });
+}
+
+function setupThemeToggle() {
+  applyTheme(getStoredTheme());
+
+  document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const nextTheme = document.body.dataset.theme === "light" ? "dark" : "light";
+      window.localStorage.setItem(themeStorageKey, nextTheme);
+      applyTheme(nextTheme);
+    });
+  });
 }
 
 function minutesOf(dayConfig, type) {
@@ -536,6 +581,7 @@ function setupBookingForm() {
   });
 }
 
+setupThemeToggle();
 updateOpenStatus();
 setupHeroMotion();
 setupBookingForm();

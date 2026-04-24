@@ -9,7 +9,7 @@ window.CREWE_CUT_CONFIG = {
     return;
   }
 
-  const version = "202604211745-admin-pro";
+  const version = "202604241520-mobile-theme";
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
   stylesheet.href = `admin-enhancements.css?v=${version}`;
