@@ -208,7 +208,20 @@
       return;
     }
 
-    const groups = groupBookings(bookings).slice(0, 6);
+    let currentBookings = bookings;
+    const startInput = document.getElementById("analytics-start");
+    const endInput = document.getElementById("analytics-end");
+    if (startInput && endInput && startInput.value && endInput.value) {
+        const startObj = new Date(startInput.value);
+        const endObj = new Date(endInput.value);
+        currentBookings = bookings.filter(b => {
+            if (!b.preferred_day) return false;
+            const d = new Date(b.preferred_day);
+            return d >= startObj && d <= endObj;
+        });
+    }
+
+    const groups = groupBookings(currentBookings).slice(0, 6);
     const total = groups.reduce((sum, group) => sum + group.count, 0);
     if (!total) {
       chart.style.background = "rgba(255, 255, 255, 0.045)";
@@ -244,7 +257,20 @@
       return;
     }
 
-    const filtered = selected === "all" ? bookings : bookings.filter((booking) => booking.service === selected);
+    let currentBookings = bookings;
+    const startInput = document.getElementById("analytics-start");
+    const endInput = document.getElementById("analytics-end");
+    if (startInput && endInput && startInput.value && endInput.value) {
+        const startObj = new Date(startInput.value);
+        const endObj = new Date(endInput.value);
+        currentBookings = bookings.filter(b => {
+            if (!b.preferred_day) return false;
+            const d = new Date(b.preferred_day);
+            return d >= startObj && d <= endObj;
+        });
+    }
+
+    const filtered = selected === "all" ? currentBookings : currentBookings.filter((booking) => booking.service === selected);
     const groups = groupBookings(filtered);
     const prices = getServicePrices();
     const revenue = groups.reduce((sum, group) => sum + group.revenue, 0);
@@ -252,11 +278,28 @@
     const average = filtered.length ? revenue / filtered.length : 0;
     const maxRevenue = Math.max(...groups.map((group) => group.revenue), 1);
 
+    summary.style.display = "grid";
+    summary.style.gridTemplateColumns = "repeat(auto-fit, minmax(130px, 1fr))";
+    summary.style.gap = "0.75rem";
+    summary.style.marginBottom = "1.5rem";
+
     summary.innerHTML = `
-      <article class="stat-card"><strong>${formatMoney(revenue)}</strong><span>Estimated sales</span></article>
-      <article class="stat-card"><strong>${filtered.length}</strong><span>Bookings</span></article>
-      <article class="stat-card"><strong>${formatMoney(activeRevenue)}</strong><span>Confirmed / completed</span></article>
-      <article class="stat-card"><strong>${formatMoney(average)}</strong><span>Average service</span></article>
+      <div style="background: var(--surface2, #fdfaf6); border: 1px solid var(--border, #e5e7eb); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 0.25rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+        <div style="font-size: 1.5rem; font-weight: 700; color: var(--text, #111827);">${formatMoney(revenue)}</div>
+        <div style="font-size: 0.75rem; font-weight: 600; color: var(--muted, #6b7280); text-transform: uppercase; letter-spacing: 0.5px;">Estimated Sales</div>
+      </div>
+      <div style="background: var(--surface2, #fdfaf6); border: 1px solid var(--border, #e5e7eb); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 0.25rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+        <div style="font-size: 1.5rem; font-weight: 700; color: var(--text, #111827);">${filtered.length}</div>
+        <div style="font-size: 0.75rem; font-weight: 600; color: var(--muted, #6b7280); text-transform: uppercase; letter-spacing: 0.5px;">Bookings</div>
+      </div>
+      <div style="background: var(--surface2, #fdfaf6); border: 1px solid var(--border, #e5e7eb); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 0.25rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+        <div style="font-size: 1.5rem; font-weight: 700; color: var(--text, #111827);">${formatMoney(activeRevenue)}</div>
+        <div style="font-size: 0.75rem; font-weight: 600; color: var(--muted, #6b7280); text-transform: uppercase; letter-spacing: 0.5px;">Confirmed / Completed</div>
+      </div>
+      <div style="background: var(--surface2, #fdfaf6); border: 1px solid var(--border, #e5e7eb); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 0.25rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+        <div style="font-size: 1.5rem; font-weight: 700; color: var(--text, #111827);">${formatMoney(average)}</div>
+        <div style="font-size: 0.75rem; font-weight: 600; color: var(--muted, #6b7280); text-transform: uppercase; letter-spacing: 0.5px;">Average Service</div>
+      </div>
     `;
 
     if (!groups.length) {
@@ -265,16 +308,21 @@
     }
 
     breakdown.innerHTML = groups.map((group) => `
-      <article class="sales-row">
-        <div>
-          <strong>${escapeHtml(group.service)}</strong>
-          <span>${group.count} booking${group.count === 1 ? "" : "s"}</span>
+      <div style="background: var(--surface, #fff); border: 1px solid var(--border, #e5e7eb); border-radius: 12px; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
+        
+        <!-- Background Progress Bar -->
+        <div style="position: absolute; top: 0; left: 0; height: 100%; width: ${(group.revenue / maxRevenue) * 100}%; background: var(--accent, #d4a468); opacity: 0.1; z-index: 0; pointer-events: none;"></div>
+
+        <div style="display: flex; flex-direction: column; z-index: 1;">
+          <strong style="font-size: 1rem; color: var(--text, #111827); font-weight: 600;">${escapeHtml(group.service)}</strong>
+          <span style="font-size: 0.8rem; color: var(--muted, #6b7280); margin-top: 0.2rem;">${group.count} booking${group.count === 1 ? "" : "s"}</span>
         </div>
-        <div class="sales-row-side">
-          <strong>${formatMoney(group.revenue)}</strong>
-          <span class="sales-bar"><i style="width:${Math.max(8, (group.revenue / maxRevenue) * 100)}%"></i></span>
+        
+        <div style="display: flex; flex-direction: column; align-items: flex-end; z-index: 1;">
+          <strong style="font-size: 1.1rem; color: var(--text, #111827); font-weight: 700;">${formatMoney(group.revenue)}</strong>
+          <span style="font-size: 0.75rem; color: var(--accent, #d4a468); font-weight: 600; margin-top: 0.3rem; background: color-mix(in srgb, var(--accent) 15%, transparent); padding: 0.1rem 0.5rem; border-radius: 4px;">${Math.round((group.revenue/revenue)*100) || 0}% of total</span>
         </div>
-      </article>
+      </div>
     `).join("");
   }
 
@@ -318,6 +366,17 @@
         setTimeout(loadAnalytics, 900);
       }
     });
+
+    const presetSelect = document.getElementById("analytics-preset");
+    if (presetSelect) {
+      presetSelect.addEventListener("change", () => {
+        setTimeout(renderAnalytics, 50); // wait for admin-pro to set dates
+      });
+    }
+    const startInput = document.getElementById("analytics-start");
+    const endInput = document.getElementById("analytics-end");
+    if (startInput) startInput.addEventListener("change", renderAnalytics);
+    if (endInput) endInput.addEventListener("change", renderAnalytics);
   }
 
   ensureNavigation();

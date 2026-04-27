@@ -9,7 +9,7 @@ create table if not exists public.bookings (
   preferred_day date not null,
   preferred_time time not null,
   notes text not null default '',
-  status text not null default 'new' check (status in ('new', 'contacted', 'confirmed', 'completed')),
+  status text not null default 'new' check (status in ('new', 'contacted', 'confirmed', 'completed', 'cancelled')),
   created_at timestamptz not null default timezone('utc', now())
 );
 
