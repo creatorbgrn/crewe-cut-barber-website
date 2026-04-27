@@ -48,6 +48,8 @@ const statusLabels = {
   cancelled: "Cancelled"
 };
 
+const CANCELLED_NOTE_PREFIX = "[CANCELLED]";
+
 const defaultShopSettings = {
   services: [
     { name: "Haircut", duration: "35 min", price: "£15", featured: true, active: true },
@@ -103,10 +105,34 @@ function isCancelledStatus(status) {
     return normalizeStatus(status) === "cancelled";
 }
 
+function hasCancelledNoteFlag(notes) {
+    return String(notes || "").trimStart().startsWith(CANCELLED_NOTE_PREFIX);
+}
+
+function stripCancelledNoteFlag(notes) {
+    const value = String(notes || "");
+    if (!hasCancelledNoteFlag(value)) {
+        return value;
+    }
+
+    return value
+        .trimStart()
+        .replace(CANCELLED_NOTE_PREFIX, "")
+        .replace(/^\s+/, "");
+}
+
+function buildCancelledNote(notes) {
+    const cleanNotes = stripCancelledNoteFlag(notes).trim();
+    return cleanNotes ? `${CANCELLED_NOTE_PREFIX}\n${cleanNotes}` : CANCELLED_NOTE_PREFIX;
+}
+
 function normalizeBooking(booking) {
+    const noteFlaggedCancelled = hasCancelledNoteFlag(booking.notes);
     return {
         ...booking,
-        status: normalizeStatus(booking.status)
+        raw_notes: String(booking.notes || ""),
+        notes: stripCancelledNoteFlag(booking.notes),
+        status: noteFlaggedCancelled ? "cancelled" : normalizeStatus(booking.status)
     };
 }
 
@@ -557,12 +583,19 @@ async function updateStatus(id, newStatus) {
     const supabase = getSupabase();
     const requestedStatus = normalizeStatus(newStatus);
     const attempts = requestedStatus === "cancelled" ? ["cancelled", "canceled"] : [requestedStatus];
+    const currentBooking = allBookings.find((booking) => booking.id === id);
     let lastError = null;
 
     console.log("Attempting to update booking", id, "to status", requestedStatus);
 
     for (const statusValue of attempts) {
-        const { error } = await supabase.from("bookings").update({ status: statusValue }).eq("id", id);
+        const payload = { status: statusValue };
+
+        if (requestedStatus !== "cancelled" && currentBooking?.raw_notes && hasCancelledNoteFlag(currentBooking.raw_notes)) {
+            payload.notes = stripCancelledNoteFlag(currentBooking.raw_notes);
+        }
+
+        const { error } = await supabase.from("bookings").update(payload).eq("id", id);
         if (!error) {
             await loadData();
             return;
@@ -573,6 +606,23 @@ async function updateStatus(id, newStatus) {
     if (lastError) {
         console.error("Supabase update error:", lastError);
         const needsSchemaHelp = requestedStatus === "cancelled" && /bookings_status_check/i.test(lastError.message || "");
+
+        if (needsSchemaHelp && currentBooking) {
+            const { error: noteFallbackError } = await supabase
+                .from("bookings")
+                .update({ notes: buildCancelledNote(currentBooking.raw_notes) })
+                .eq("id", id);
+
+            if (!noteFallbackError) {
+                await loadData();
+                setFeedback(dashboardFeedback, "success", "Booking marked as cancelled.");
+                return;
+            }
+
+            lastError = noteFallbackError;
+            console.error("Supabase cancel-note fallback error:", noteFallbackError);
+        }
+
         const detail = needsSchemaHelp
             ? "Failed to update status. Your Supabase bookings table still needs the cancel status enabled."
             : "Failed to update status: " + lastError.message;
