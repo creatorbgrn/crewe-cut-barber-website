@@ -3,327 +3,520 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Login | Crewe Cut Barber</title>
+    <title>Admin | Crewe Cut Barber</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    >
-    <link rel="stylesheet" href="styles.css?v=202604241625-dark-icon-mobile">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin-pro.css?v=20260427">
   </head>
-  <body class="admin-body">
-    <section class="admin-login-wrap" id="admin-auth-panel">
-      <div class="admin-login-card">
-        <div class="admin-login-head">
-          <h1>Admin Login</h1>
-          <button class="theme-toggle theme-toggle-compact" type="button" data-theme-toggle aria-label="Switch theme">
-            <span class="theme-toggle-icon" data-theme-icon>☀</span>
-          </button>
-        </div>
-        <div class="form-message" id="admin-feedback" hidden></div>
-        <form class="booking-form admin-login-form" id="admin-login-form">
-          <label>
-            ID / Email
-            <input type="text" name="email" autocomplete="username" required>
-          </label>
-          <label>
-            Password
-            <input type="password" name="password" autocomplete="current-password" required>
-          </label>
-          <button class="button button-primary button-full" id="admin-login-button" type="submit">Log in</button>
-        </form>
-      </div>
-    </section>
+  <body class="admin-body" data-theme="dark">
 
-    <div class="admin-app" id="admin-app" hidden>
-      <header class="admin-topbar">
-        <div class="admin-topbar-brand">
-          <strong>Crewe Cut Barber</strong>
-          <span>Admin Panel</span>
-        </div>
-        <div class="admin-topbar-actions">
-          <nav class="admin-nav" aria-label="Admin sections">
-            <button class="admin-nav-button is-active" type="button" data-admin-target="overview">Overview</button>
-            <button class="admin-nav-button" type="button" data-admin-target="analytics">Analytics</button>
-            <button class="admin-nav-button" type="button" data-admin-target="requests">Requests</button>
-            <button class="admin-nav-button" type="button" data-admin-target="clients">Clients</button>
-            <button class="admin-nav-button" type="button" data-admin-target="services">Services</button>
-            <button class="admin-nav-button" type="button" data-admin-target="photos">Photos</button>
-            <button class="admin-nav-button" type="button" data-admin-target="availability">Availability</button>
-            <button class="admin-nav-button" type="button" data-admin-target="shop">Shop</button>
-          </nav>
-          <label class="admin-section-select-wrap">
-            <span>Section</span>
-            <select id="admin-section-select" aria-label="Admin section">
-              <option value="overview">Overview</option>
-              <option value="analytics">Analytics</option>
-              <option value="requests">Requests</option>
-              <option value="clients">Clients</option>
-              <option value="services">Services</option>
-              <option value="photos">Photos</option>
-              <option value="availability">Availability</option>
-              <option value="shop">Shop</option>
-            </select>
-          </label>
-          <div class="admin-topbar-tools">
-            <button class="theme-toggle theme-toggle-compact" type="button" data-theme-toggle aria-label="Switch theme">
-              <span class="theme-toggle-icon" data-theme-icon>☀</span>
-            </button>
-            <a class="button button-secondary admin-view-site" href="./" target="_blank" rel="noreferrer">View site</a>
-            <button class="button button-secondary" id="logout-button" type="button">Log out</button>
+    <!-- ═══════════════════════ LOGIN ═══════════════════════ -->
+    <div class="login-screen" id="admin-auth-panel">
+      <div class="login-bg-glow"></div>
+      <div class="login-card">
+        <div class="login-logo">
+          <div class="login-logo-mark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+          </div>
+          <div>
+            <div class="login-logo-name">Crewe Cut Barber</div>
+            <div class="login-logo-sub">Admin Portal</div>
           </div>
         </div>
-      </header>
+        <h1 class="login-title">Welcome back</h1>
+        <p class="login-desc">Sign in to manage your bookings and shop settings.</p>
+        <div class="form-message" id="admin-feedback" hidden></div>
+        <form id="admin-login-form" class="login-form">
+          <div class="field-group">
+            <label class="field-label" for="login-email">Email address</label>
+            <div class="field-wrap">
+              <span class="field-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </span>
+              <input class="field-input" id="login-email" type="text" name="email" autocomplete="username" placeholder="admin@example.com" required>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="login-password">Password</label>
+            <div class="field-wrap">
+              <span class="field-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input class="field-input" id="login-password" type="password" name="password" autocomplete="current-password" placeholder="••••••••" required>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-full" id="admin-login-button" type="submit">
+            <span>Sign in</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
 
-      <main class="admin-layout">
-        <section class="admin-content">
+    <!-- ═══════════════════════ APP SHELL ═══════════════════════ -->
+    <div class="app-shell" id="admin-app" hidden>
+
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-brand">
+            <div class="sidebar-brand-mark">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+            </div>
+            <div class="sidebar-brand-text">
+              <span class="sidebar-brand-name">Crewe Cut</span>
+              <span class="sidebar-brand-sub">Admin</span>
+            </div>
+          </div>
+          <button class="sidebar-collapse-btn" id="sidebar-toggle" aria-label="Toggle sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+        </div>
+
+        <nav class="sidebar-nav">
+          <div class="sidebar-section-label">Dashboard</div>
+          <button class="nav-item is-active" data-admin-target="overview">
+            <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
+            <span class="nav-label">Overview</span>
+            <span class="nav-badge" id="nav-badge-new"></span>
+          </button>
+          <button class="nav-item" data-admin-target="analytics">
+            <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+            <span class="nav-label">Analytics</span>
+          </button>
+
+          <div class="sidebar-section-label">Bookings</div>
+          <button class="nav-item" data-admin-target="requests">
+            <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
+            <span class="nav-label">All Requests</span>
+          </button>
+          <button class="nav-item" data-admin-target="clients">
+            <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+            <span class="nav-label">Clients</span>
+          </button>
+          <button class="nav-item" data-admin-target="calendar">
+            <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+            <span class="nav-label">Calendar</span>
+          </button>
+
+          <div class="sidebar-section-label">Settings</div>
+          <button class="nav-item" data-admin-target="services">
+            <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></span>
+            <span class="nav-label">Services</span>
+          </button>
+          <button class="nav-item" data-admin-target="photos">
+            <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+            <span class="nav-label">Gallery</span>
+          </button>
+          <button class="nav-item" data-admin-target="availability">
+            <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+            <span class="nav-label">Availability</span>
+          </button>
+          <button class="nav-item" data-admin-target="shop">
+            <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <span class="nav-label">Shop Info</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a class="sidebar-footer-link" href="./" target="_blank" rel="noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span class="nav-label">View website</span>
+          </a>
+          <button class="sidebar-footer-link danger" id="logout-button" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span class="nav-label">Sign out</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <div class="main-area">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="topbar-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <div class="topbar-breadcrumb">
+              <span id="topbar-section-label">Overview</span>
+            </div>
+          </div>
+          <div class="topbar-right">
+            <div class="topbar-clock" id="topbar-clock"></div>
+            <button class="topbar-icon-btn" id="theme-toggle-btn" aria-label="Toggle theme" data-theme-toggle>
+              <span data-theme-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              </span>
+            </button>
+            <div class="topbar-avatar" title="Admin">A</div>
+          </div>
+        </header>
+
+        <!-- CONTENT -->
+        <main class="content-area">
           <div class="form-message" id="admin-dashboard-feedback" hidden></div>
 
+          <!-- ── OVERVIEW ── -->
           <section class="admin-section is-active" id="admin-section-overview" data-admin-section="overview">
-            <div class="admin-section-head">
+            <div class="page-header">
               <div>
-                <p class="eyebrow">Overview</p>
-                <h2>Today at a glance</h2>
+                <p class="page-eyebrow">Dashboard</p>
+                <h2 class="page-title">Today at a glance</h2>
               </div>
-              <button class="button button-secondary" id="refresh-bookings-button" type="button">Refresh</button>
+              <button class="btn btn-ghost" id="refresh-bookings-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                Refresh
+              </button>
             </div>
-            <div class="admin-meta-grid" id="admin-stats"></div>
-            <div class="admin-columns">
-              <div class="admin-panel">
-                <div class="admin-panel-head">
-                  <h3>Latest requests</h3>
+
+            <div class="kpi-grid" id="admin-stats">
+              <!-- JS renders stat cards here -->
+            </div>
+
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head">
+                  <h3 class="panel-title">Latest Requests</h3>
+                  <button class="btn btn-xs btn-ghost" data-admin-target="requests">View all <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
                 </div>
-                <div class="admin-list" id="latest-bookings"></div>
+                <div class="panel-body" id="latest-bookings"></div>
               </div>
-              <div class="admin-panel">
-                <div class="admin-panel-head">
-                  <h3>Today</h3>
+              <div class="panel">
+                <div class="panel-head">
+                  <h3 class="panel-title">Today's Schedule</h3>
+                  <span class="live-dot"><span></span>Live</span>
                 </div>
-                <div class="admin-list" id="today-bookings"></div>
+                <div class="panel-body" id="today-bookings"></div>
+              </div>
+            </div>
+
+            <!-- Activity mini-chart -->
+            <div class="panel">
+              <div class="panel-head">
+                <h3 class="panel-title">Booking Activity (Last 30 days)</h3>
+              </div>
+              <div class="panel-body">
+                <canvas id="activity-chart" height="80"></canvas>
               </div>
             </div>
           </section>
 
+          <!-- ── ANALYTICS ── -->
           <section class="admin-section" id="admin-section-analytics" data-admin-section="analytics">
-            <div class="admin-section-head">
+            <div class="page-header">
               <div>
-                <p class="eyebrow">Analytics</p>
-                <h2>Bookings and sales</h2>
+                <p class="page-eyebrow">Insights</p>
+                <h2 class="page-title">Bookings & Revenue</h2>
+              </div>
+              <select class="select-pill" id="analytics-period">
+                <option value="7">Last 7 days</option>
+                <option value="30" selected>Last 30 days</option>
+                <option value="90">Last 90 days</option>
+              </select>
+            </div>
+
+            <div class="kpi-grid" id="analytics-kpi">
+              <!-- JS fills -->
+            </div>
+
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head">
+                  <h3 class="panel-title">Service Breakdown</h3>
+                </div>
+                <div class="panel-body chart-panel">
+                  <canvas id="booking-types-chart" height="260"></canvas>
+                </div>
+                <div id="booking-types-legend" class="chart-legend"></div>
+              </div>
+              <div class="panel">
+                <div class="panel-head">
+                  <h3 class="panel-title">Revenue Estimate</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="revenue-summary" id="analytics-sales-summary"></div>
+                  <div id="sales-service-breakdown" class="service-breakdown-list"></div>
+                </div>
               </div>
             </div>
-            <div class="analytics-grid">
-              <div class="admin-panel">
-                <div class="admin-panel-head">
-                  <h3>Booking types</h3>
-                </div>
-                <div class="chart-card">
-                  <div class="pie-chart" id="booking-types-chart" aria-label="Booking type chart"></div>
-                  <div class="chart-legend" id="booking-types-legend"></div>
-                </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h3 class="panel-title">Bookings Over Time</h3>
               </div>
-              <div class="admin-panel">
-                <div class="admin-panel-head">
-                  <h3>Sales estimate</h3>
-                </div>
-                <div class="admin-toolbar analytics-toolbar">
-                  <label>
-                    View
-                    <select id="sales-service-filter">
-                      <option value="all">Total sales</option>
-                    </select>
-                  </label>
-                </div>
-                <div class="sales-summary" id="analytics-sales-summary"></div>
-                <div class="analytics-breakdown" id="sales-service-breakdown"></div>
+              <div class="panel-body">
+                <canvas id="bookings-over-time-chart" height="100"></canvas>
               </div>
             </div>
           </section>
 
+          <!-- ── REQUESTS ── -->
           <section class="admin-section" id="admin-section-requests" data-admin-section="requests">
-            <div class="admin-section-head">
+            <div class="page-header">
               <div>
-                <p class="eyebrow">Requests</p>
-                <h2>Booking requests</h2>
+                <p class="page-eyebrow">Bookings</p>
+                <h2 class="page-title">Booking Requests</h2>
+              </div>
+              <div class="header-actions">
+                <button class="btn btn-ghost" id="export-csv-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Export CSV
+                </button>
               </div>
             </div>
-            <div class="admin-toolbar">
-              <label>
-                Search
-                <input type="search" id="booking-search-input" placeholder="Name, phone, email, service">
-              </label>
-              <label>
-                Status
-                <select id="booking-status-filter">
-                  <option value="all">All requests</option>
-                  <option value="new">New</option>
-                  <option value="contacted">Contacted</option>
-                  <option value="confirmed">Confirmed</option>
-                  <option value="completed">Completed</option>
-                </select>
-              </label>
+
+            <div class="toolbar">
+              <div class="search-wrap">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input class="search-input" id="booking-search-input" type="search" placeholder="Search by name, phone, email or service…">
+              </div>
+              <div class="filter-chips" id="status-filter-chips">
+                <button class="chip is-active" data-status="all">All</button>
+                <button class="chip" data-status="new">New</button>
+                <button class="chip" data-status="contacted">Contacted</button>
+                <button class="chip" data-status="confirmed">Confirmed</button>
+                <button class="chip" data-status="completed">Completed</button>
+              </div>
             </div>
-            <div class="mobile-bookings" id="mobile-bookings"></div>
-            <div class="table-wrap admin-panel table-panel">
-              <table class="bookings-table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Service</th>
-                    <th>Slot</th>
-                    <th>Contact</th>
-                    <th>Notes</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody id="bookings-table-body"></tbody>
-              </table>
+
+            <div class="panel table-panel">
+              <div class="table-wrap">
+                <table class="data-table" id="bookings-table">
+                  <thead>
+                    <tr>
+                      <th>Client</th>
+                      <th>Service</th>
+                      <th>Slot</th>
+                      <th>Contact</th>
+                      <th>Notes</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bookings-table-body"></tbody>
+                </table>
+              </div>
             </div>
+
+            <!-- Mobile cards -->
+            <div class="mobile-cards" id="mobile-bookings"></div>
           </section>
 
+          <!-- ── CLIENTS ── -->
           <section class="admin-section" id="admin-section-clients" data-admin-section="clients">
-            <div class="admin-section-head">
+            <div class="page-header">
               <div>
-                <p class="eyebrow">Clients</p>
-                <h2>Client contacts</h2>
+                <p class="page-eyebrow">CRM</p>
+                <h2 class="page-title">Client Directory</h2>
               </div>
             </div>
-            <div class="admin-panel">
-              <div class="admin-list" id="clients-list"></div>
+            <div class="toolbar">
+              <div class="search-wrap">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input class="search-input" id="client-search-input" type="search" placeholder="Search clients…">
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-body" id="clients-list"></div>
             </div>
           </section>
 
-          <section class="admin-section" id="admin-section-services" data-admin-section="services">
-            <div class="admin-section-head">
+          <!-- ── CALENDAR ── -->
+          <section class="admin-section" id="admin-section-calendar" data-admin-section="calendar">
+            <div class="page-header">
               <div>
-                <p class="eyebrow">Services</p>
-                <h2>Services and prices</h2>
+                <p class="page-eyebrow">Schedule</p>
+                <h2 class="page-title">Booking Calendar</h2>
               </div>
-              <div class="admin-section-actions">
-                <button class="button button-secondary" id="add-service-button" type="button">Add service</button>
-                <button class="button button-primary site-settings-save" type="button">Save changes</button>
+              <div class="cal-nav">
+                <button class="btn btn-ghost" id="cal-prev">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                  Prev
+                </button>
+                <span class="cal-month-label" id="cal-month-label"></span>
+                <button class="btn btn-ghost" id="cal-next">
+                  Next
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
               </div>
             </div>
-            <div class="admin-panel">
-              <p class="admin-help-text">Edit the services shown on the website and booking form.</p>
+            <div class="panel">
+              <div class="panel-body">
+                <div class="calendar-grid" id="calendar-grid"></div>
+              </div>
+            </div>
+            <div class="panel" id="cal-day-panel" hidden>
+              <div class="panel-head">
+                <h3 class="panel-title" id="cal-day-title">Bookings for day</h3>
+              </div>
+              <div class="panel-body" id="cal-day-list"></div>
+            </div>
+          </section>
+
+          <!-- ── SERVICES ── -->
+          <section class="admin-section" id="admin-section-services" data-admin-section="services">
+            <div class="page-header">
+              <div>
+                <p class="page-eyebrow">Menu</p>
+                <h2 class="page-title">Services & Prices</h2>
+              </div>
+              <div class="header-actions">
+                <button class="btn btn-ghost" id="add-service-button">+ Add service</button>
+                <button class="btn btn-primary site-settings-save">Save changes</button>
+              </div>
+            </div>
+            <div class="panel">
+              <p class="panel-hint">Edit services shown on the website and in the booking form. Toggle "Popular" to feature a service.</p>
               <div class="settings-list" id="services-settings-list"></div>
             </div>
           </section>
 
+          <!-- ── PHOTOS ── -->
           <section class="admin-section" id="admin-section-photos" data-admin-section="photos">
-            <div class="admin-section-head">
+            <div class="page-header">
               <div>
-                <p class="eyebrow">Photos</p>
-                <h2>Website gallery</h2>
+                <p class="page-eyebrow">Media</p>
+                <h2 class="page-title">Gallery Photos</h2>
               </div>
-              <div class="admin-section-actions">
-                <button class="button button-secondary" id="add-photo-button" type="button">Add photo</button>
-                <button class="button button-primary site-settings-save" type="button">Save changes</button>
+              <div class="header-actions">
+                <button class="btn btn-ghost" id="add-photo-button">+ Add photo</button>
+                <button class="btn btn-primary site-settings-save">Save changes</button>
               </div>
             </div>
-            <div class="admin-panel">
-              <p class="admin-help-text">Use image URLs or upload files to Supabase Storage. Maximum 15 photos, 5MB each.</p>
+            <div class="panel">
+              <p class="panel-hint">Upload or link images for the website gallery. Max 15 photos · 5MB each.</p>
               <div class="settings-list" id="gallery-settings-list"></div>
             </div>
           </section>
 
+          <!-- ── AVAILABILITY ── -->
           <section class="admin-section" id="admin-section-availability" data-admin-section="availability">
-            <div class="admin-section-head">
+            <div class="page-header">
               <div>
-                <p class="eyebrow">Availability</p>
-                <h2>Booking rules</h2>
+                <p class="page-eyebrow">Schedule</p>
+                <h2 class="page-title">Booking Rules</h2>
               </div>
-              <button class="button button-primary site-settings-save" id="save-settings-button" type="button">Save changes</button>
+              <button class="btn btn-primary site-settings-save" id="save-settings-button">Save changes</button>
             </div>
-            <div class="admin-columns">
-              <div class="admin-panel">
-                <div class="admin-panel-head">
-                  <h3>Capacity</h3>
-                </div>
-                <div class="settings-grid">
-                  <label>
-                    Max clients per time
-                    <input type="number" min="1" max="10" id="max-bookings-input">
-                  </label>
-                  <label>
-                    Time interval
-                    <select id="slot-interval-input">
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head"><h3 class="panel-title">Capacity</h3></div>
+                <div class="panel-body">
+                  <div class="field-group">
+                    <label class="field-label">Max clients per time slot</label>
+                    <input class="field-input standalone" type="number" min="1" max="10" id="max-bookings-input">
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label">Time slot interval</label>
+                    <select class="field-input standalone" id="slot-interval-input">
                       <option value="15">15 minutes</option>
                       <option value="30">30 minutes</option>
                       <option value="45">45 minutes</option>
                       <option value="60">60 minutes</option>
                     </select>
-                  </label>
+                  </div>
                 </div>
               </div>
-              <div class="admin-panel">
-                <div class="admin-panel-head">
-                  <h3>Closed dates and times</h3>
-                </div>
-                <div class="settings-grid">
-                  <label>
-                    Unavailable dates
-                    <textarea id="unavailable-dates-input" rows="5" placeholder="2026-05-01&#10;2026-05-02"></textarea>
-                  </label>
-                  <label>
-                    Unavailable slots
-                    <textarea id="unavailable-slots-input" rows="5" placeholder="2026-05-01 10:30&#10;2026-05-02 14:00"></textarea>
-                  </label>
+              <div class="panel">
+                <div class="panel-head"><h3 class="panel-title">Closed Dates & Slots</h3></div>
+                <div class="panel-body">
+                  <div class="field-group">
+                    <label class="field-label">Unavailable dates (one per line)</label>
+                    <textarea class="field-input standalone" id="unavailable-dates-input" rows="4" placeholder="2026-05-01&#10;2026-05-02"></textarea>
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label">Unavailable slots (one per line)</label>
+                    <textarea class="field-input standalone" id="unavailable-slots-input" rows="4" placeholder="2026-05-01 10:30&#10;2026-05-02 14:00"></textarea>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
 
+          <!-- ── SHOP ── -->
           <section class="admin-section" id="admin-section-shop" data-admin-section="shop">
-            <div class="admin-section-head">
+            <div class="page-header">
               <div>
-                <p class="eyebrow">Shop</p>
-                <h2>Key details</h2>
+                <p class="page-eyebrow">Business</p>
+                <h2 class="page-title">Shop Information</h2>
               </div>
             </div>
-            <div class="admin-columns">
-              <div class="admin-panel">
-                <div class="admin-panel-head">
-                  <h3>Contact</h3>
-                </div>
-                <div class="admin-list admin-list-static">
-                  <div class="admin-list-item">
-                    <strong>Phone</strong>
-                    <span><a href="tel:01316294160">0131 629 4160</a></span>
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head"><h3 class="panel-title">Contact Details</h3></div>
+                <div class="panel-body">
+                  <div class="info-row">
+                    <span class="info-row-label">Phone</span>
+                    <a class="info-row-value" href="tel:01316294160">0131 629 4160</a>
                   </div>
-                  <div class="admin-list-item">
-                    <strong>Address</strong>
-                    <span>218 Boswall Parkway, Edinburgh, EH5 2LX</span>
+                  <div class="info-row">
+                    <span class="info-row-label">Address</span>
+                    <span class="info-row-value">218 Boswall Parkway, Edinburgh, EH5 2LX</span>
                   </div>
                 </div>
               </div>
-              <div class="admin-panel">
-                <div class="admin-panel-head">
-                  <h3>Opening hours</h3>
-                </div>
-                <div class="admin-list admin-list-static">
-                  <div class="admin-list-item">
-                    <strong>Monday to Saturday</strong>
-                    <span>9:00AM - 7:00PM</span>
+              <div class="panel">
+                <div class="panel-head"><h3 class="panel-title">Opening Hours</h3></div>
+                <div class="panel-body">
+                  <div class="info-row">
+                    <span class="info-row-label">Mon – Sat</span>
+                    <span class="info-row-value">9:00 AM – 7:00 PM</span>
                   </div>
-                  <div class="admin-list-item">
-                    <strong>Sunday</strong>
-                    <span>10:00AM - 6:00PM</span>
+                  <div class="info-row">
+                    <span class="info-row-label">Sunday</span>
+                    <span class="info-row-value">10:00 AM – 6:00 PM</span>
                   </div>
-                  <div class="admin-list-item">
-                    <strong>Walk-ins</strong>
-                    <span>Welcome every day</span>
+                  <div class="info-row">
+                    <span class="info-row-label">Walk-ins</span>
+                    <span class="info-row-value accent">Welcome every day</span>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <!-- Quick links -->
+            <div class="panel">
+              <div class="panel-head"><h3 class="panel-title">Quick Links</h3></div>
+              <div class="panel-body quick-links-grid">
+                <a class="quick-link" href="./" target="_blank" rel="noreferrer">
+                  <span class="quick-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  </span>
+                  <span>View website</span>
+                </a>
+                <a class="quick-link" href="https://www.google.com/maps?q=218+Boswall+Parkway+Edinburgh" target="_blank" rel="noreferrer">
+                  <span class="quick-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  </span>
+                  <span>Google Maps</span>
+                </a>
+                <a class="quick-link" href="tel:01316294160">
+                  <span class="quick-link-icon">📞</span>
+                  <span>Call shop</span>
+                </a>
               </div>
             </div>
           </section>
-        </section>
-      </main>
+
+        </main>
+      </div>
+    </div>
+
+    <!-- MOBILE OVERLAY -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- BOOKING DETAIL MODAL -->
+    <div class="modal-backdrop" id="booking-modal-backdrop" hidden>
+      <div class="modal" id="booking-modal" role="dialog" aria-modal="true">
+        <div class="modal-head">
+          <h3 class="modal-title" id="modal-client-name">Client Details</h3>
+          <button class="modal-close" id="booking-modal-close" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body" id="modal-body-content"></div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="config.js?v=202604241625-dark-icon-mobile"></script>
-    <script src="admin.js?v=202604241625-dark-icon-mobile"></script>
+    <script src="config.js?v=20260427"></script>
+    <script src="admin-pro.js?v=20260427"></script>
   </body>
 </html>
