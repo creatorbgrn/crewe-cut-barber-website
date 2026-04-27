@@ -37,13 +37,15 @@ const defaultShopSettings = {
   maxBookingsPerSlot: 1,
   slotIntervalMinutes: 30,
   unavailableDates: [],
-  unavailableSlots: []
+  unavailableSlots: [],
+  blockedServiceSlots: []
 };
 
 const config = window.CREWE_CUT_CONFIG || {};
 const themeStorageKey = "crewe-cut-theme";
 let supabaseClient = null;
 let shopSettings = structuredClone(defaultShopSettings);
+let bookingTimeRequestToken = 0;
 
 function hasSupabaseConfig() {
   return Boolean(
@@ -89,7 +91,9 @@ function applyTheme(theme) {
     button.setAttribute("aria-pressed", String(nextTheme === "dark"));
 
     if (icon) {
-      icon.textContent = nextTheme === "light" ? "Dark" : "Light";
+      icon.innerHTML = nextTheme === "light"
+        ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+        : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
     }
   });
 }
@@ -275,7 +279,8 @@ function normaliseSettings(settings) {
     services: Array.isArray(settings?.services) && settings.services.length ? settings.services : defaultServices,
     gallery: Array.isArray(settings?.gallery) && settings.gallery.length ? settings.gallery : defaultGallery,
     unavailableDates: Array.isArray(settings?.unavailableDates) ? settings.unavailableDates : [],
-    unavailableSlots: Array.isArray(settings?.unavailableSlots) ? settings.unavailableSlots : []
+    unavailableSlots: Array.isArray(settings?.unavailableSlots) ? settings.unavailableSlots : [],
+    blockedServiceSlots: Array.isArray(settings?.blockedServiceSlots) ? settings.blockedServiceSlots : []
   };
 }
 
@@ -334,20 +339,53 @@ function renderGallery(settings = shopSettings) {
   setupReveal();
 }
 
-function renderTimeOptions(settings = shopSettings, selectedDateStr = null) {
+function timeToMinutes(value) {
+  const parts = String(value || "").split(":");
+  if (parts.length < 2) {
+    return NaN;
+  }
+  return (Number(parts[0]) * 60) + Number(parts[1]);
+}
+
+function isServiceBlocked(serviceName, day, time) {
+  if (!serviceName || !day || !time) {
+    return false;
+  }
+
+  const slotMinutes = timeToMinutes(time);
+  return shopSettings.blockedServiceSlots.some((block) => {
+    if (block?.active === false || block?.service !== serviceName || block?.day !== day) {
+      return false;
+    }
+
+    const start = timeToMinutes(block.startTime);
+    const end = timeToMinutes(block.endTime || block.startTime);
+    if (Number.isNaN(start) || Number.isNaN(end) || Number.isNaN(slotMinutes)) {
+      return false;
+    }
+
+    const safeEnd = end <= start ? start + (Number(shopSettings.slotIntervalMinutes) || 30) : end;
+    return slotMinutes >= start && slotMinutes < safeEnd;
+  });
+}
+
+function renderTimeOptions(settings = shopSettings, selectedDateStr = null, selectedService = null) {
   const select = document.getElementById("booking-time");
   if (!select) {
-    return;
+    return [];
   }
 
   const current = select.value;
+  const serviceName = selectedService || document.getElementById("booking-service")?.value || "";
   const interval = Number(settings.slotIntervalMinutes) || 30;
   const times = [];
 
+  // Determine open/close hours from the selected date's day of week
   let openMins = 9 * 60;
   let closeMins = 19 * 60;
 
   if (selectedDateStr) {
+    // Parse yyyy-mm-dd without timezone shift
     const parts = selectedDateStr.split("-");
     if (parts.length === 3) {
       const d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
@@ -363,7 +401,10 @@ function renderTimeOptions(settings = shopSettings, selectedDateStr = null) {
   for (let mins = openMins; mins <= closeMins - interval; mins += interval) {
     const hour = String(Math.floor(mins / 60)).padStart(2, "0");
     const minute = String(mins % 60).padStart(2, "0");
-    times.push(`${hour}:${minute}`);
+    const time = `${hour}:${minute}`;
+    if (!isSlotUnavailable(selectedDateStr, time) && !isServiceBlocked(serviceName, selectedDateStr, time)) {
+      times.push(time);
+    }
   }
 
   select.innerHTML = '<option value="">Select a time</option>' + times
@@ -373,6 +414,8 @@ function renderTimeOptions(settings = shopSettings, selectedDateStr = null) {
   if (current && times.includes(current)) {
     select.value = current;
   }
+
+  return times;
 }
 
 function isSlotUnavailable(day, time) {
@@ -398,11 +441,71 @@ function updateAvailabilityNote(message, type = "info") {
   note.textContent = message;
 }
 
+async function syncBookingTimeAvailability(day, service) {
+  const select = document.getElementById("booking-time");
+  const requestToken = ++bookingTimeRequestToken;
+  const times = renderTimeOptions(shopSettings, day, service);
+
+  if (!select || !day || !service) {
+    return;
+  }
+
+  if (!times.length) {
+    updateAvailabilityNote("No times are available for that service on the selected day.", "error");
+    return;
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return;
+  }
+
+  const results = await Promise.all(times.map(async (time) => {
+    const { data, error } = await supabase.rpc("get_slot_booking_count", {
+      p_day: day,
+      p_time: time
+    });
+
+    return {
+      time,
+      count: Number(data || 0),
+      error
+    };
+  }));
+
+  if (requestToken !== bookingTimeRequestToken) {
+    return;
+  }
+
+  const availableTimes = results
+    .filter((result) => result.error || result.count < Number(shopSettings.maxBookingsPerSlot || 1))
+    .map((result) => result.time);
+
+  const current = select.value;
+  select.innerHTML = '<option value="">Select a time</option>' + availableTimes
+    .map((time) => `<option value="${time}">${time}</option>`)
+    .join("");
+
+  if (current && availableTimes.includes(current)) {
+    select.value = current;
+  }
+
+  if (day && service) {
+    if (!availableTimes.length) {
+      updateAvailabilityNote("That service is fully booked for the selected day.", "error");
+    } else {
+      updateAvailabilityNote(`This slot accepts up to ${shopSettings.maxBookingsPerSlot} booking${Number(shopSettings.maxBookingsPerSlot) === 1 ? "" : "s"}.`, "info");
+    }
+  }
+}
+
 function applyShopSettings(settings) {
   shopSettings = normaliseSettings(settings);
   renderServices(shopSettings);
   renderGallery(shopSettings);
-  renderTimeOptions(shopSettings);
+  const selectedDay = document.getElementById("field-day")?.value || null;
+  const selectedService = document.getElementById("booking-service")?.value || null;
+  syncBookingTimeAvailability(selectedDay, selectedService);
 }
 
 async function loadShopSettings() {
@@ -476,6 +579,7 @@ function setupBookingForm() {
   const form = document.getElementById("booking-form");
   const feedback = document.getElementById("booking-feedback");
   const submitButton = document.getElementById("booking-submit");
+  const serviceInput = form?.querySelector("select[name='service']");
   const preferredDayInput = form?.querySelector("input[name='preferredDay']");
   const preferredTimeInput = form?.querySelector("select[name='preferredTime']");
 
@@ -487,23 +591,29 @@ function setupBookingForm() {
     preferredDayInput.min = new Date().toISOString().slice(0, 10);
   }
 
-  [preferredDayInput, preferredTimeInput].forEach((input) => {
+  [serviceInput, preferredDayInput, preferredTimeInput].forEach((input) => {
     input?.addEventListener("change", () => {
       const formData = new FormData(form);
+      const service = String(formData.get("service") || "").trim();
       const day = String(formData.get("preferredDay") || "").trim();
       const time = String(formData.get("preferredTime") || "").trim();
 
-      if (input === preferredDayInput && day) {
-        renderTimeOptions(shopSettings, day);
+      if (input === preferredDayInput || input === serviceInput) {
+        syncBookingTimeAvailability(day, service);
       }
 
-      if (!day || !time) {
+      if (!service || !day || !time) {
         updateAvailabilityNote("");
         return;
       }
 
       if (isSlotUnavailable(day, time)) {
         updateAvailabilityNote("That date or time is unavailable. Please choose another slot.", "error");
+        return;
+      }
+
+      if (isServiceBlocked(service, day, time)) {
+        updateAvailabilityNote("That service is unavailable for the selected time. Please choose another slot.", "error");
         return;
       }
 
@@ -554,6 +664,11 @@ function setupBookingForm() {
       return;
     }
 
+    if (isServiceBlocked(payload.service, payload.preferred_day, payload.preferred_time)) {
+      setFeedback(feedback, "error", "That service is unavailable for the selected time. Please choose another slot.");
+      return;
+    }
+
     submitButton.disabled = true;
     submitButton.textContent = "Sending request...";
 
@@ -590,7 +705,7 @@ function setupBookingForm() {
     if (preferredDayInput) {
       preferredDayInput.min = new Date().toISOString().slice(0, 10);
     }
-    renderTimeOptions(shopSettings);
+    syncBookingTimeAvailability("", "");
     updateAvailabilityNote("");
     setFeedback(feedback, "success", "✓ Thanks! Your request has been sent and the shop will be in touch soon.");
   });
