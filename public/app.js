@@ -22,7 +22,7 @@ const defaultServices = [
 ];
 
 const defaultGallery = [
-  { title: "Shop front", text: "Crewe Cut Barber on Boswall Parkway.", src: "images/Main.jpg", fallback: "images/interior-wide.jpg", active: true },
+  { title: "Store front", text: "Crewe Cut Barber on Boswall Parkway.", src: "images/Main.jpg", fallback: "images/interior-wide.jpg", active: true },
   { title: "Main stations", text: "Main cutting stations inside the shop.", src: "images/interior-wide.jpg", fallback: "images/interior-row.jpg", active: true },
   { title: "Interior", text: "Ready for the day.", src: "images/interior-row.jpg", fallback: "images/interior-wide.jpg", active: true },
   { title: "Chairs", text: "Classic barber chairs and mirror line.", src: "images/chairs.jpg", fallback: "images/interior-row.jpg", active: true },
