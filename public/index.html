@@ -3,49 +3,59 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Crewe Cut Barber | Haircuts, Fades & Beard Trims in Edinburgh</title>
-    <meta
-      name="description"
-      content="Crewe Cut Barber on Boswall Parkway, Edinburgh. Walk-ins welcome for sharp haircuts, fades, beard trims, hot towel shaves, and everyday grooming."
-    >
+    <title>Crewe Cut Barber | Haircuts, Fades &amp; Beard Trims in Edinburgh</title>
+    <meta name="description" content="Crewe Cut Barber on Boswall Parkway, Edinburgh. Walk-ins welcome for sharp haircuts, fades, beard trims, hot towel shaves, and everyday grooming. Open 7 days a week.">
+    <meta name="keywords" content="barber Edinburgh, haircut Edinburgh, skin fade Edinburgh, beard trim Edinburgh, Boswall Parkway barber, Crewe Cut">
+    <meta property="og:title" content="Crewe Cut Barber | Edinburgh">
+    <meta property="og:description" content="Sharp cuts, clean fades, and proper barbering all week at 218 Boswall Parkway, Edinburgh.">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/jpeg" href="images/chairs.jpg">
+    <link rel="apple-touch-icon" href="images/chairs.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="styles.css?v=202604241625-dark-icon-mobile">
+    <link rel="stylesheet" href="styles.css?v=20260427-v5">
   </head>
   <body>
     <div class="topbar">
       <div class="container topbar-inner">
-        <span>218 Boswall Parkway, Edinburgh</span>
+        <span class="topbar-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          218 Boswall Parkway, Edinburgh EH5 2LX
+        </span>
         <span id="shop-status">Open 7 days</span>
-        <a href="tel:01316294160">0131 629 4160</a>
+        <a href="tel:01316294160" class="topbar-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6.29 6.29l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
+          0131 629 4160
+        </a>
       </div>
     </div>
 
     <header class="site-header">
       <div class="container nav-row">
-        <a href="./" class="brand">
+        <a href="./" class="brand" aria-label="Crewe Cut Barber home">
           <span class="brand-main">Crewe Cut Barber</span>
           <span class="brand-sub">Edinburgh</span>
         </a>
         <div class="nav-actions">
-          <nav class="nav-links">
+          <nav class="nav-links" aria-label="Main navigation">
             <a href="#services">Services</a>
             <a href="#gallery">Gallery</a>
             <a href="#booking">Book</a>
             <a href="#contact">Contact</a>
           </nav>
           <button class="theme-toggle theme-toggle-compact" type="button" data-theme-toggle aria-label="Switch theme">
-            <span class="theme-toggle-icon" data-theme-icon>☀</span>
+            <span class="theme-toggle-icon" data-theme-icon>&#9728;</span>
           </button>
         </div>
       </div>
     </header>
 
     <main>
+      <!-- ═══ HERO ═══ -->
       <section class="hero reveal">
         <div class="container hero-grid" data-hero-parallax>
           <div class="hero-copy">
@@ -59,39 +69,39 @@
             <div class="pill-row">
               <span class="info-pill">Open 7 days</span>
               <span class="info-pill">Walk-ins welcome</span>
-              <span class="info-pill">Haircuts & fades</span>
-              <span class="info-pill">Beard trims & shaves</span>
+              <span class="info-pill">Haircuts &amp; fades</span>
+              <span class="info-pill">Beard trims &amp; shaves</span>
             </div>
 
             <div class="hero-actions">
-              <a class="button button-primary" href="#booking">Book now</a>
-              <a class="button button-secondary" href="tel:01316294160">Call the shop</a>
+              <a class="button button-primary" href="#booking" id="hero-book-btn">Book Appointment</a>
+              <a class="button button-secondary" href="tel:01316294160" id="hero-call-btn">Call the Shop</a>
             </div>
 
             <div class="stats-grid">
               <article class="stat-card">
                 <strong>Haircut</strong>
-                <span>£15</span>
+                <span>from £15</span>
               </article>
               <article class="stat-card">
                 <strong>Skin Fade</strong>
-                <span>£17</span>
+                <span>from £17</span>
               </article>
               <article class="stat-card">
                 <strong id="live-status-title">Open 7 days</strong>
-                <span id="live-status-copy">Mon-Sat 9AM-7PM</span>
+                <span id="live-status-copy">Mon–Sat 9AM–7PM</span>
               </article>
             </div>
           </div>
 
           <div class="hero-visual">
-            <img src="images/storefront.jpg" alt="Crewe Cut Barber storefront" onerror="this.onerror=null;this.src='images/interior-wide.jpg'">
-            <div class="floating-card floating-top">
-              <span>Walk-ins</span>
-              <strong>Same-day cuts welcome</strong>
+            <img src="images/interior-wide.jpg" alt="Master Barber at Crewe Cut" loading="eager">
+            <div class="floating-card floating-top glass">
+              <span>Precision</span>
+              <strong>Master Barbering</strong>
             </div>
-            <div class="floating-card floating-bottom">
-              <span>Address</span>
+            <div class="floating-card floating-bottom glass">
+              <span>Location</span>
               <strong>218 Boswall Parkway</strong>
               <em>Edinburgh, EH5 2LX</em>
             </div>
@@ -99,6 +109,7 @@
         </div>
       </section>
 
+      <!-- ═══ SERVICES ═══ -->
       <section id="services" class="services reveal">
         <div class="container">
           <div class="section-head">
@@ -185,6 +196,7 @@
         </div>
       </section>
 
+      <!-- ═══ GALLERY ═══ -->
       <section id="gallery" class="gallery reveal">
         <div class="container">
           <div class="section-head">
@@ -193,7 +205,7 @@
           </div>
           <div class="gallery-grid" id="gallery-grid">
             <article class="gallery-card reveal gallery-card-1">
-              <button class="gallery-button" type="button" data-gallery-src="images/storefront.jpg" data-gallery-title="Shop front" data-gallery-text="Crewe Cut Barber on Boswall Parkway.">
+              <button class="gallery-button" type="button" id="gallery-btn-1" data-gallery-src="images/storefront.jpg" data-gallery-title="Shop front" data-gallery-text="Crewe Cut Barber on Boswall Parkway.">
                 <img src="images/storefront.jpg" alt="Shop front" loading="lazy" onerror="this.onerror=null;this.src='images/interior-wide.jpg'">
               </button>
               <div class="gallery-overlay">
@@ -202,7 +214,7 @@
               </div>
             </article>
             <article class="gallery-card reveal gallery-card-2">
-              <button class="gallery-button" type="button" data-gallery-src="images/interior-wide.jpg" data-gallery-title="Main stations" data-gallery-text="Main cutting stations inside the shop.">
+              <button class="gallery-button" type="button" id="gallery-btn-2" data-gallery-src="images/interior-wide.jpg" data-gallery-title="Main stations" data-gallery-text="Main cutting stations inside the shop.">
                 <img src="images/interior-wide.jpg" alt="Main stations" loading="lazy" onerror="this.onerror=null;this.src='images/interior-row.jpg'">
               </button>
               <div class="gallery-overlay">
@@ -211,7 +223,7 @@
               </div>
             </article>
             <article class="gallery-card reveal gallery-card-3">
-              <button class="gallery-button" type="button" data-gallery-src="images/interior-row.jpg" data-gallery-title="Interior" data-gallery-text="Ready for the day.">
+              <button class="gallery-button" type="button" id="gallery-btn-3" data-gallery-src="images/interior-row.jpg" data-gallery-title="Interior" data-gallery-text="Ready for the day.">
                 <img src="images/interior-row.jpg" alt="Interior" loading="lazy" onerror="this.onerror=null;this.src='images/interior-wide.jpg'">
               </button>
               <div class="gallery-overlay">
@@ -220,7 +232,7 @@
               </div>
             </article>
             <article class="gallery-card reveal gallery-card-4">
-              <button class="gallery-button" type="button" data-gallery-src="images/chairs.jpg" data-gallery-title="Chairs" data-gallery-text="Classic barber chairs and mirror line.">
+              <button class="gallery-button" type="button" id="gallery-btn-4" data-gallery-src="images/chairs.jpg" data-gallery-title="Chairs" data-gallery-text="Classic barber chairs and mirror line.">
                 <img src="images/chairs.jpg" alt="Chairs" loading="lazy" onerror="this.onerror=null;this.src='images/interior-row.jpg'">
               </button>
               <div class="gallery-overlay">
@@ -229,7 +241,7 @@
               </div>
             </article>
             <article class="gallery-card reveal gallery-card-5">
-              <button class="gallery-button" type="button" data-gallery-src="images/cut-detail.jpg" data-gallery-title="Finished cut" data-gallery-text="Fresh cut in the chair.">
+              <button class="gallery-button" type="button" id="gallery-btn-5" data-gallery-src="images/cut-detail.jpg" data-gallery-title="Finished cut" data-gallery-text="Fresh cut in the chair.">
                 <img src="images/cut-detail.jpg" alt="Finished cut" loading="lazy" onerror="this.onerror=null;this.src='images/fade-finish.jpg'">
               </button>
               <div class="gallery-overlay">
@@ -238,7 +250,7 @@
               </div>
             </article>
             <article class="gallery-card reveal gallery-card-6">
-              <button class="gallery-button" type="button" data-gallery-src="images/fade-finish.jpg" data-gallery-title="Fade detail" data-gallery-text="Clean blend and finish.">
+              <button class="gallery-button" type="button" id="gallery-btn-6" data-gallery-src="images/fade-finish.jpg" data-gallery-title="Fade detail" data-gallery-text="Clean blend and finish.">
                 <img src="images/fade-finish.jpg" alt="Fade detail" loading="lazy" onerror="this.onerror=null;this.src='images/cut-detail.jpg'">
               </button>
               <div class="gallery-overlay">
@@ -247,7 +259,7 @@
               </div>
             </article>
             <article class="gallery-card reveal gallery-card-7">
-              <button class="gallery-button" type="button" data-gallery-src="images/client-chair.jpg" data-gallery-title="In the chair" data-gallery-text="Service in progress.">
+              <button class="gallery-button" type="button" id="gallery-btn-7" data-gallery-src="images/client-chair.jpg" data-gallery-title="In the chair" data-gallery-text="Service in progress.">
                 <img src="images/client-chair.jpg" alt="In the chair" loading="lazy" onerror="this.onerror=null;this.src='images/chairs.jpg'">
               </button>
               <div class="gallery-overlay">
@@ -259,6 +271,7 @@
         </div>
       </section>
 
+      <!-- ═══ BOOKING ═══ -->
       <section id="booking" class="booking reveal">
         <div class="container booking-grid">
           <div class="booking-copy">
@@ -272,52 +285,52 @@
               <strong>Crewe Cut Barber</strong>
               <span>218 Boswall Parkway, Edinburgh, EH5 2LX</span>
               <a href="tel:01316294160">0131 629 4160</a>
-              <span>Mon-Sat 9:00AM - 7:00PM</span>
-              <span>Sunday 10:00AM - 6:00PM</span>
+              <span>Mon–Sat &nbsp;9:00AM – 7:00PM</span>
+              <span>Sunday &nbsp;&nbsp;10:00AM – 6:00PM</span>
             </div>
           </div>
 
-          <form class="booking-form" id="booking-form">
+          <form class="booking-form" id="booking-form" novalidate>
             <div class="form-message" id="booking-feedback" hidden></div>
-            <label>
+            <label for="field-name">
               Full name
-              <input type="text" name="clientName" required>
+              <input type="text" id="field-name" name="clientName" autocomplete="name" required placeholder="e.g. John Smith">
             </label>
-            <label>
+            <label for="field-phone">
               Phone number
-              <input type="tel" name="phone" required>
+              <input type="tel" id="field-phone" name="phone" autocomplete="tel" required placeholder="e.g. 07700 900123">
             </label>
-            <label>
+            <label for="field-email">
               Email
-              <input type="email" name="email" required>
+              <input type="email" id="field-email" name="email" autocomplete="email" required placeholder="e.g. john@example.com">
             </label>
-            <label>
+            <label for="booking-service">
               Service
               <select name="service" id="booking-service" required>
                 <option value="">Select a service</option>
-                <option value="Haircut">Haircut - £15</option>
-                <option value="Skin or Zero Fade">Skin or Zero Fade - £17</option>
-                <option value="Scissor Cut">Scissor Cut - £16</option>
-                <option value="Kids Haircut (Under 12)">Kids Haircut (Under 12) - £13</option>
-                <option value="Kids Skin or Zero Fade">Kids Skin or Zero Fade - £16</option>
-                <option value="All Over">All Over - £12</option>
-                <option value="Hot Towel Shave">Hot Towel Shave - £17</option>
-                <option value="Hot Towel Head Shave">Hot Towel Head Shave - £17</option>
-                <option value="Beard Trim and Shape Up">Beard Trim and Shape Up - £13</option>
-                <option value="Beard Trim">Beard Trim - £8</option>
-                <option value="Shape Up">Shape Up - £8</option>
-                <option value="Threading">Threading - £8</option>
-                <option value="Old Age Pensioner (67+)">Old Age Pensioner (67+) - £13</option>
-                <option value="Double Zero">Double Zero - £5</option>
-                <option value="Nose Wax and Ear Wax">Nose Wax and Ear Wax - £7</option>
+                <option value="Haircut">Haircut – £15</option>
+                <option value="Skin or Zero Fade">Skin or Zero Fade – £17</option>
+                <option value="Scissor Cut">Scissor Cut – £16</option>
+                <option value="Kids Haircut (Under 12)">Kids Haircut (Under 12) – £13</option>
+                <option value="Kids Skin or Zero Fade">Kids Skin or Zero Fade – £16</option>
+                <option value="All Over">All Over – £12</option>
+                <option value="Hot Towel Shave">Hot Towel Shave – £17</option>
+                <option value="Hot Towel Head Shave">Hot Towel Head Shave – £17</option>
+                <option value="Beard Trim and Shape Up">Beard Trim and Shape Up – £13</option>
+                <option value="Beard Trim">Beard Trim – £8</option>
+                <option value="Shape Up">Shape Up – £8</option>
+                <option value="Threading">Threading – £8</option>
+                <option value="Old Age Pensioner (67+)">Old Age Pensioner (67+) – £13</option>
+                <option value="Double Zero">Double Zero – £5</option>
+                <option value="Nose Wax and Ear Wax">Nose Wax and Ear Wax – £7</option>
               </select>
             </label>
             <div class="split-fields">
-              <label>
+              <label for="field-day">
                 Preferred day
-                <input type="date" name="preferredDay" required>
+                <input type="date" id="field-day" name="preferredDay" required>
               </label>
-              <label>
+              <label for="booking-time">
                 Preferred time
                 <select name="preferredTime" id="booking-time" required>
                   <option value="">Select a time</option>
@@ -325,9 +338,9 @@
               </label>
             </div>
             <div class="availability-note" id="availability-note" hidden></div>
-            <label>
-              Notes
-              <textarea name="notes" rows="5" placeholder="Add anything useful about the service or timing."></textarea>
+            <label for="field-notes">
+              Notes <span class="field-optional">(optional)</span>
+              <textarea id="field-notes" name="notes" rows="4" placeholder="Add anything useful about the service or timing."></textarea>
             </label>
             <button class="button button-primary button-full" id="booking-submit" type="submit">Send request</button>
           </form>
@@ -335,29 +348,83 @@
       </section>
     </main>
 
+    <!-- ═══ FOOTER ═══ -->
     <footer class="site-footer" id="contact">
-      <div class="container footer-row">
-        <div>
-          <strong>Crewe Cut Barber</strong>
-          <p>218 Boswall Parkway, Edinburgh, EH5 2LX</p>
+      <div class="container footer-main">
+        <div class="footer-brand">
+          <span class="brand-main">Crewe Cut Barber</span>
+          <p class="footer-tagline">Sharp cuts, clean fades, Edinburgh.</p>
+          <div class="footer-socials">
+            <a href="https://www.facebook.com" target="_blank" rel="noreferrer noopener" aria-label="Facebook" class="social-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" rel="noreferrer noopener" aria-label="Instagram" class="social-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://www.google.com/maps?q=218+Boswall+Parkway+Edinburgh" target="_blank" rel="noreferrer noopener" aria-label="Google Maps" class="social-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </a>
+          </div>
         </div>
-        <div>
-          <a href="tel:01316294160">0131 629 4160</a>
-          <p>Open 7 days</p>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Opening hours</h4>
+          <ul class="footer-list">
+            <li><span>Monday – Saturday</span><span>9:00AM – 7:00PM</span></li>
+            <li><span>Sunday</span><span>10:00AM – 6:00PM</span></li>
+            <li><span>Walk-ins</span><span>Welcome every day</span></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Contact</h4>
+          <ul class="footer-list footer-contact">
+            <li><a href="tel:01316294160">0131 629 4160</a></li>
+            <li>218 Boswall Parkway</li>
+            <li>Edinburgh, EH5 2LX</li>
+            <li>
+              <a href="https://www.google.com/maps/search/?api=1&query=218+Boswall+Parkway+Edinburgh+EH5+2LX" target="_blank" rel="noreferrer">
+                Get directions &rarr;
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-map-col">
+          <h4 class="footer-heading">Find us</h4>
+          <div class="footer-map">
+            <iframe
+              title="Crewe Cut Barber location map"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2232.768!2d-3.22!3d55.975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTXCsDU4JzMwLjAiTiAzwrAxMyc0Mi4wIlc!5e0!3m2!1sen!2suk!4v1"
+              allowfullscreen
+            ></iframe>
+          </div>
         </div>
       </div>
-      <div class="container footer-admin-row">
+
+      <div class="container footer-bottom">
+        <p class="footer-copy">&copy; <span id="footer-year">2026</span> Crewe Cut Barber. All rights reserved.</p>
         <a class="footer-admin-link" href="admin.html" aria-label="Admin login">Admin</a>
       </div>
     </footer>
 
-    <div class="mobile-cta-bar">
-      <a href="tel:01316294160">Call</a>
-      <a href="#booking">Book</a>
-      <a href="https://www.google.com/maps?q=place_id:ChIJk0ZapCTHh0gRIy6q_9C0GL4&place_id=ChIJk0ZapCTHh0gRIy6q_9C0GL4" target="_blank" rel="noreferrer">Directions</a>
+    <!-- ═══ MOBILE CTA BAR ═══ -->
+    <div class="mobile-cta-bar" aria-label="Quick actions">
+      <a href="tel:01316294160" id="mobile-call-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6.29 6.29l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
+        Call
+      </a>
+      <a href="#booking" id="mobile-book-link">Book now</a>
+      <a href="https://www.google.com/maps/search/?api=1&query=218+Boswall+Parkway+Edinburgh+EH5+2LX" target="_blank" rel="noreferrer" id="mobile-directions-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Directions
+      </a>
     </div>
 
-    <div class="lightbox" id="gallery-lightbox" aria-hidden="true">
+    <!-- ═══ LIGHTBOX ═══ -->
+    <div class="lightbox" id="gallery-lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Gallery image viewer">
       <button class="lightbox-close" type="button" aria-label="Close gallery">&times;</button>
       <div class="lightbox-dialog">
         <img id="lightbox-image" src="" alt="">
@@ -369,7 +436,11 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="config.js?v=202604241625-dark-icon-mobile"></script>
-    <script src="app.js?v=202604241625-dark-icon-mobile"></script>
+    <script src="config.js?v=20260427-v5"></script>
+    <script src="app.js?v=20260427-v5"></script>
+    <script>
+      // Update footer year dynamically
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
   </body>
 </html>
